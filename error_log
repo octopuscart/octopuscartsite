@@ -1,0 +1,2 @@
+[18-Aug-2018 05:04:14 America/Chicago] PHP Fatal error:  Call to a member function num_rows() on boolean in /home3/j2k5e6r5/bespoketailorshk.costcointernational.com/application/models/Product_model.php on line 20
+[23-Sep-2018 20:36:24 America/Chicago] PHP Fatal error:  Call to a member function row() on boolean in /home3/j2k5e6r5/bespoketailorshk.costcointernational.com/application/controllers/CartGuest.php on line 63

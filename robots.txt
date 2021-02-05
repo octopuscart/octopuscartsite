@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /cgi-bin/
+Disallow: /wp-admin/
+Disallow: /index.php
+Disallow: /Account/
+Disallow: /readme.html
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: googlebot-image
+Allow: /
+
+User-agent: googlebot-mobile
+Allow: /
+
+Sitemap: http://www.woodlandshk.com/sitemap_index.xml
