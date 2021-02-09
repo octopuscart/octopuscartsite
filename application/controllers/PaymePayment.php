@@ -111,6 +111,7 @@ class PaymePayment extends CI_Controller {
     }
     
     function test(){
+        $data = array();
         $this->load->view('payme/test', $data);
     }
 
