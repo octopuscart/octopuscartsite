@@ -163,7 +163,7 @@ $delivery_time = $delivery_details ? $delivery_details['delivery_time'] : $deliv
     <section id="content" style="overflow: visible;">
         <div class="content-wrap nobottompadding">
             <div class="container clearfix">
-                <div class="row clearfix">
+                <div class=" clearfix">
 
                     <div class="cart-page-area">
                         <div class="container" ng-if="globleCartData.total_quantity">
@@ -224,7 +224,8 @@ $delivery_time = $delivery_details ? $delivery_details['delivery_time'] : $deliv
                                                             }
                                                         } else {
                                                             ?>
-                                                            <h4 class="text-center "  style="color: red"><i class="fa fa-warning"></i> Please Add Shipping Address</h4>
+                                                            <h4 class="text-center "  style="color: red;    width: 100%;
+    padding: 50px 0px;"><i class="fa fa-warning"></i> Please Add Shipping Address</h4>
 
                                                             <?php
                                                         }

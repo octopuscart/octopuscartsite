@@ -117,8 +117,8 @@ class Api extends REST_Controller {
         $query = $this->get("query");
 //        $query = $this->db->select('title, id, file_name, price')->from('products')->where("title LIKE '%$keyword%' ")->get();
 //        $searchobj = $query->result_array();
-
-        $pquery = "SELECT title, file_name, id, price from products where title like '%$query%'";
+        $productserver = PRODUCTIMAGELINK;
+        $pquery = "SELECT title, concat('$productserver', file_name) as file_name, id, price from products where title like '%$query%'";
         $attr_products = $this->Product_model->query_exe($pquery);
 
 
@@ -172,8 +172,10 @@ class Api extends REST_Controller {
         $categoriesString = $this->Product_model->stringCategories($category_id) . ", " . $category_id;
         $categoriesString = ltrim($categoriesString, ", ");
 
-        $product_query = "select pt.id as product_id, pt.*
-            from products as pt where pt.category_id in ($categoriesString) and variant_product_of = '' $pricequery  order by id ";
+        $product_query = "select pt.id as product_id,  ct.category_name, pt.*
+            from products as pt 
+            join category as ct on ct.id = pt.category_id 
+            where pt.category_id in ($categoriesString) and variant_product_of = '' $pricequery  order by id ";
         $product_result = $this->Product_model->query_exe($product_query);
 
 

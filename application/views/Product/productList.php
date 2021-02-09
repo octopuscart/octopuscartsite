@@ -68,9 +68,9 @@ $image2 = "";
         }*/
 
     .h-100 {
-    height: 100% !important;
-    border: 1px solid #f5f5f5;
-}
+        height: 100% !important;
+        border: 1px solid #f5f5f5;
+    }
 </style>
 
 
@@ -134,33 +134,33 @@ $image2 = "";
                 </div>
 
                 <div class="mb-8">
-                     <div class="range-slider">
-                                <h4 class="font-size-14 mb-3 font-weight-bold">Price</h4>
-                                <!-- Range Slider -->
-                                <input class="js-range-slider" type="text"
-                                data-extra-classes="u-range-slider u-range-slider-indicator u-range-slider-grid"
-                                data-type="double"
-                                data-grid="false"
-                                data-hide-from-to="true"
-                                data-prefix="$"
-                                data-min="0"
-                                data-max="300"
-                                data-from="0"
-                                data-to="3000"
-                                data-result-min="#rangeSliderExample3MinResult"
-                                data-result-max="#rangeSliderExample3MaxResult">
-                                <!-- End Range Slider -->
-                                <div class="mt-1 text-gray-111 d-flex mb-4">
-                                    <span class="mr-0dot5">Price: </span>
-                                    <span>$</span>
-                                    <span id="rangeSliderExample3MinResult" class=""></span>
-                                    <span class="mx-0dot5"> — </span>
-                                    <span>$</span>
-                                    <span id="rangeSliderExample3MaxResult" class=""></span>
-                                </div>
-                                <button type="submit" class="btn px-4 btn-primary-dark-w py-2 rounded-lg">Filter</button>
-                            </div>
-                      
+                    <div class="range-slider">
+                        <h4 class="font-size-14 mb-3 font-weight-bold">Price</h4>
+                        <!-- Range Slider -->
+                        <input class="js-range-slider" type="text"
+                               data-extra-classes="u-range-slider u-range-slider-indicator u-range-slider-grid"
+                               data-type="double"
+                               data-grid="false"
+                               data-hide-from-to="true"
+                               data-prefix="$"
+                               data-min="0"
+                               data-max="300"
+                               data-from="0"
+                               data-to="3000"
+                               data-result-min="#rangeSliderExample3MinResult"
+                               data-result-max="#rangeSliderExample3MaxResult">
+                        <!-- End Range Slider -->
+                        <div class="mt-1 text-gray-111 d-flex mb-4">
+                            <span class="mr-0dot5">Price: </span>
+                            <span>$</span>
+                            <span id="rangeSliderExample3MinResult" class=""></span>
+                            <span class="mx-0dot5"> — </span>
+                            <span>$</span>
+                            <span id="rangeSliderExample3MaxResult" class=""></span>
+                        </div>
+                        <button type="submit" class="btn px-4 btn-primary-dark-w py-2 rounded-lg">Filter</button>
+                    </div>
+
                 </div>
             </div>
             <div class="col-xl-9 col-wd-9gdot5">
@@ -184,7 +184,7 @@ $image2 = "";
                         </a>
                         <!-- End Account Sidebar Toggle Button -->
                     </div>
-                   
+
                     <div class="d-flex">
                         <form method="get">
                             <!-- Select -->
@@ -230,10 +230,13 @@ $image2 = "";
                                 <div class="product-item__outer h-100">
                                     <div class="product-item__inner px-xl-4 p-3">
                                         <div class="product-item__body pb-xl-2">
-                                            <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
+                                            <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">{{product.category_name}}</a></div>
                                             <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">{{product.title}}</a></h5>
                                             <div class="mb-2">
-                                                <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="<?php echo base_url(); ?>assets/images/defaultproduct.png" alt="Image Description"></a>
+                                                <a href="../shop/single-product-fullwidth.html" class="d-block text-center">
+                                                    <img class="img-fluid product_image_set" src="<?php echo base_url(); ?>assets/images/defaultproduct.png" style="background-image:url(<?php echo PRODUCTIMAGELINK ?>{{product.file_name}});background-size: cover;
+                                                         background-position: center;"   alt="Image Description"/>
+                                                </a>
                                             </div>
                                             <div class="mb-3">
                                                 <a class="d-inline-flex align-items-center small font-size-14" href="#">
@@ -248,13 +251,12 @@ $image2 = "";
                                                 </a>
                                             </div>
                                             <ul class="font-size-12 p-0 text-gray-110 mb-4">
-                                                 <li class="line-clamp-1 mb-1 list-bullet">{{product.short_description}}</li>
-                                                <li class="line-clamp-1 mb-1 list-bullet">{{product.description}}</li>
-                                          </ul>
+                                                <li class="line-clamp-1 mb-0 list-bullet">{{product.short_description}}</li>
+                                            </ul>
                                             <div class="text-gray-20 mb-2 font-size-12">SKU: {{product.sku}}</div>
                                             <div class="flex-center-between mb-1">
                                                 <div class="prodcut-price">
-                                                    <div class="text-gray-100">{{product.price}}</div>
+                                                    <div class="text-gray-100">{{product.price|currency:"<?php echo globle_currency;?>"}}</div>
                                                 </div>
                                                 <div class="d-none d-xl-block prodcut-add-cart">
                                                     <button ng-click="addToCart(product.product_id, 1)" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></button>

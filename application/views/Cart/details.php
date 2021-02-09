@@ -26,8 +26,11 @@ $this->load->view('layout/header');
                         <td class="text-center">
                             <a href="#" class="text-gray-32 font-size-26" ng-click="removeCart(product.product_id)">×</a>
                         </td>
-                        <td class="d-none d-md-table-cell">
-                            <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="../../assets/img/300X300/img7.png" alt="Image Description"></a>
+                        <td class="d-none d-md-table-cell text-center">
+                            <a href="#">
+                                <img class="img-fluid product_image_set" src="<?php echo base_url(); ?>assets/images/defaultproduct.png" style="background-image:url({{product.file_name}});background-size: cover;
+                                     background-position: center;height:100px"   alt="Image Description"  />
+                            </a>
                         </td>
 
                         <td data-title="Product">
@@ -81,7 +84,7 @@ $this->load->view('layout/header');
                                         <!-- End Apply coupon Form -->
                                     </div>
                                     <div class="d-md-flex">
-                                        <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button>
+                                        <!--<button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Update cart</button>-->
                                         <a href="<?php echo site_url("Cart/checkoutInit"); ?>" class="btn btn-primary-dark-w ml-md-2 px-5 px-md-4 px-lg-5 w-100 w-md-auto d-none d-md-inline-block">Proceed to checkout</a>
                                     </div>
                                 </div>
@@ -128,8 +131,23 @@ $this->load->view('layout/header');
     </div>
 </div>
 <script src="<?php echo base_url(); ?>assets/theme/angular/productController.js"></script>
-
+<div class="toast" data-autohide="false">
+    <div class="toast-header">
+        <strong class="mr-auto text-primary">Toast Header</strong>
+        <small class="text-muted">5 mins ago</small>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+    </div>
+    <div class="toast-body">
+        Some text inside the toast body
+    </div>
+</div>
 
 <?php
 $this->load->view('layout/footer');
 ?>
+
+<script>
+                                            $(document).ready(function () {
+                                                $('.toast').toast('show');
+                                            });
+</script>

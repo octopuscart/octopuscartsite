@@ -54,6 +54,115 @@
             .searchtext{
                 line-height: 40px;
             }
+            .tt-menu .media-heading{
+                line-height: 15px;
+            }
+
+            ul.media-list.tt-suggestion.tt-selectable {
+                margin-bottom: 0;
+                border-bottom: 1px solid #fed700;
+                padding-top: 5px;
+            }
+
+            
+           
+            .typeahead {
+                background-color: #fff;
+            }
+
+            .typeahead:focus {
+                border: 2px solid #0097cf;
+            }
+
+            .tt-query {
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            }
+
+            .tt-hint {
+                color: #999
+            }
+
+            .tt-menu {
+                width: 100%;
+                margin: 20px 0;
+                margin-left: 20px;
+                padding: 8px 0;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                -webkit-border-radius: 8px;
+                -moz-border-radius: 8px;
+                border-radius: 8px;
+                -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+                -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+                box-shadow: 0 5px 10px rgba(0,0,0,.2);
+            }
+
+            .tt-suggestion {
+
+                border-bottom: 1px solid #b6b6b6;
+                padding: 3px 20px;
+                font-size: 14px;
+                line-height: 24px;
+                text-align: left;
+            }
+
+
+
+            .tt-suggestion p {
+                margin: 0;
+            }
+
+            .gist {
+                font-size: 14px;
+            }
+
+
+            .searchholder .btn{
+                float: right;
+
+            }
+
+/*
+            .search-input, .search-input.typeahead  {
+                position: absolute!important;
+                top: -32px!important;
+                left:auto!important;
+                right: 20px!important;
+                z-index: 10!important;
+                height: 50px!important;
+                width: 604px!important;
+                background: rgba(17, 17, 17, 0.95);
+                border: 1px solid #111111!important;
+                padding: 5px 30px 8px!important;
+                color: #ffffff!important;
+                -webkit-border-radius: 45px;
+                -moz-border-radius: 45px;
+                -ms-border-radius: 45px;
+                -o-border-radius: 45px;
+                border-radius: 45px!important;
+                display: none;
+            }*/
+
+            .searchholder{
+                height: auto;
+                float: left;
+                width: 100%;
+            }
+
+            .serachbox-image{
+                height:50px;width:50px;float:left;
+                margin-right: 10px;
+                    background-size: cover!important;
+    background-position: center!important;
+            }
+            .empty-message{
+                padding:10px;
+                text-align: left;
+            }
+
         </style>
 
     </head>
@@ -251,11 +360,11 @@
                                         <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="" data-original-title="My Account"><i class="font-size-22 ec ec-user"></i></a></li>
                                         <li class="col pr-xl-0 px-2 px-sm-3">
                                             <a href="<?php
-    echo site_url("Cart/details");
-    ?>" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="" data-original-title="Cart">
+                                            echo site_url("Cart/details");
+                                            ?>" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="" data-original-title="Cart">
                                                 <i class="font-size-22 ec ec-shopping-bag"></i>
                                                 <span class="bg-lg-down-black width-22 height-22 bg-primary position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12">{{globleCartData.total_quantity}}</span>
-                                                <span class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">{{globleCartData.total_price|currency}}</span>
+                                                <span class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">{{globleCartData.sub_total_price|currency}}</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -266,9 +375,9 @@
                     </div>
                 </div>
                 <!-- End Logo-Search-header-icons -->
-<?php
-$this->load->view('layout/menu');
-?>
+                <?php
+                $this->load->view('layout/menu');
+                ?>
             </div>
         </header>
         <!-- ========== END HEADER ========== -->

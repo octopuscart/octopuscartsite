@@ -3,21 +3,7 @@ $this->load->view('layout/header');
 ?>
 
 <!-- Inner Page Banner Area Start Here -->
-<div class="inner-page-banner-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="breadcrumb-area">
-                    <h1>Cart Page</h1>
-                    <ul>
-                        <li><a href="#">Home</a> /</li>
-                        <li>Cart</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!-- Inner Page Banner Area End Here -->
 <!-- Cart Page Area Start Here -->
 <div class="cart-page-area">
@@ -34,8 +20,8 @@ $this->load->view('layout/header');
                 <p>You have canceled payment using PayPal try to make payment using other method or retry using PayPal. </p>
                 <hr class="dotted">
                
-                <a href="<?php echo site_url("Cart/checkoutPayment"); ?>" class="btn-send-message "> <i class="fa fa-arrow-left"></i> OTHER PAYMENT METHOD </a>
-                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token= <?php  echo $token;?>" class="btn-send-message ">RETRY PAYPAL <i class="fa fa-arrow-right"></i></a>
+                <a href="<?php echo site_url("Cart/checkoutPayment"); ?>" class="btn btn-primary-dark-w  btn-pill font-size-20 mb-3 py-3 "> <i class="fa fa-arrow-left"></i> OTHER PAYMENT METHOD </a>
+                <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token= <?php  echo $token;?>" class="btn btn-primary-dark-w  btn-pill font-size-20 mb-3 py-3 ">RETRY PAYPAL <i class="fa fa-arrow-right"></i></a>
             </div>
         </section>
     </div>

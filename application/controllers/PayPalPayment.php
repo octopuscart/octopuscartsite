@@ -25,16 +25,49 @@ class PayPalPayment extends CI_Controller {
         } else {
             $session_cart = $this->Product_model->cartData();
         }
+        $session_cart['shipping_price'] = 40;
+        if ($session_cart['total_price'] > 399) {
+            $session_cart['shipping_price'] = 0;
+        }
+        if ($this->checklogin) {
+            $user_address_details2 = $this->User_model->user_address_details($this->user_id);
+            if ($user_address_details2) {
+                $user_address_details = $user_address_details2[0];
+            } else {
+                $user_address_details = "";
+            }
+        } else {
+            $user_address_details = $this->session->userdata('shipping_address');
+        }
+        if ($user_address_details) {
+
+            $addresscheck2 = $this->session->userdata('shipping_address');
+
+            if ($user_address_details['zipcode'] == 'Tsim Sha Tsui') {
+                $session_cart['shipping_price'] = 0;
+            }
+            if ($addresscheck2['zipcode'] == 'Pickup') {
+                $session_cart['shipping_price'] = 0;
+            }
+        }
+
+        $session_cart['sub_total_price'] = $session_cart['total_price'];
+
+        $session_cart['total_price'] = $session_cart['total_price'] + $session_cart['shipping_price'];
+
+
+
         $PayPalReturnURL = site_url("PayPalPaymentGuest/success");
         $PayPalCancelURL = site_url("PayPalPaymentGuest/cancel");
 
         $paypaldata = "";
+
         $products = $session_cart['products'];
         $total_amt = $session_cart['total_price'];
         $countitem = 0;
         foreach ($products as $keyp => $valuep) {
             $ItemNumber = $valuep['sku'];
-            $ItemName = $valuep['item_name'];
+            $ItemName = $valuep['title'];
             $ItemDesc = $valuep['title'];
             $ItemPrice = $valuep['price'];
             $ItemQty = $valuep['quantity'];
@@ -60,18 +93,18 @@ class PayPalPayment extends CI_Controller {
                 '&RETURNURL=' . urlencode($PayPalReturnURL) .
                 '&CANCELURL=' . urlencode($PayPalCancelURL);
 
-        $paypaldata.= '&NOSHIPPING=0' . '&PAYMENTREQUEST_0_ITEMAMT=' . urlencode($total_amt) .
-                '&PAYMENTREQUEST_0_TAXAMT=' . urlencode('0') .
-                '&PAYMENTREQUEST_0_SHIPPINGAMT=' . urlencode('0') .
-                '&PAYMENTREQUEST_0_HANDLINGAMT=' . urlencode('0') .
-                '&PAYMENTREQUEST_0_SHIPDISCAMT=' . urlencode('0') .
-                '&PAYMENTREQUEST_0_INSURANCEAMT=' . urlencode('0') .
-                '&PAYMENTREQUEST_0_AMT=' . urlencode($total_amt) .
-                '&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode(paypal_api_currency_code) .
-                '&LOCALECODE=GB' . //PayPal pages to match the language on your website.
-                '&LOGOIMG=http://bespoketailorshk.costcointernational.com/assets/images/logo73.png' . //site logo
-                '&CARTBORDERCOLOR=000000' . //border color of cart
-                '&ALLOWNOTE=1';
+        $paypaldata .= '&NOSHIPPING=0' . '&PAYMENTREQUEST_0_ITEMAMT=' . urlencode($session_cart['sub_total_price'] ) .
+        '&PAYMENTREQUEST_0_TAXAMT=' . urlencode('0') .
+        '&PAYMENTREQUEST_0_SHIPPINGAMT=' . urlencode($session_cart['shipping_price']) .
+        '&PAYMENTREQUEST_0_HANDLINGAMT=' . urlencode('0') .
+        '&PAYMENTREQUEST_0_SHIPDISCAMT=' . urlencode('0') .
+        '&PAYMENTREQUEST_0_INSURANCEAMT=' . urlencode('0') .
+        '&PAYMENTREQUEST_0_AMT=' . urlencode($total_amt) .
+        '&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode(paypal_api_currency_code) .
+        '&LOCALECODE=GB' . //PayPal pages to match the language on your website.
+        '&LOGOIMG=https://octopuscart.com/assets/images/logo73.png' . //site logo
+        '&CARTBORDERCOLOR=000000' . //border color of cart
+        '&ALLOWNOTE=1';
         $this->load->library('paypalclass');
         $this->session->set_userdata('session_paypal', $paypaldata);
         $session_paypal = $this->session->userdata('session_paypal');

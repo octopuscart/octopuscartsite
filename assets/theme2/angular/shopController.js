@@ -258,13 +258,14 @@ App.controller('ShopController', function ($scope, $http, $timeout, $interval, $
   <li class="media">
     <div class="media-left">
       <a href="#">
-                                   <div class="product_image_back serachbox-image" style="background:url( ` + imageurlg + `{{file_name}});"></div>
+                                   <div class="product_image_back serachbox-image" style="background:url({{file_name}});"></div>
 
       </a>
     </div>
     <div class="media-body searchbody">
         <div class="row">
             <div class="col-md-7">
+
                 <h4 class="media-heading"><span class="textoverflow searchtitle">{{title}}</span></h4>
             </div>
             <div class="col-md-3 searchtext">

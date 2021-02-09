@@ -181,9 +181,15 @@ class Cart extends CI_Controller {
             }
 
             //place order
-        
+
             if (isset($_POST['place_order'])) {
+
+
+                $paymentmathod = $this->input->post('payment_type');
                 $address = $user_address_details[0];
+                if ($paymentmathod == 'PayPal') {
+                    redirect("PayPalPayment" . $checkoutmode . "/process");
+                }
 
                 if ($this->checklogin) {
                     $session_cart = $this->Product_model->cartData($this->user_id);
@@ -236,8 +242,7 @@ class Cart extends CI_Controller {
 
                 //place order
 
-                
-                $paymentmathod = $this->input->post('payment_type');
+
                 $order_array = array(
                     'name' => $user_details->first_name . " " . $user_details->last_name,
                     'email' => $user_details->email,
@@ -260,12 +265,11 @@ class Cart extends CI_Controller {
                     'payment_mode' => $paymentmathod,
                     'measurement_style' => '',
                     'credit_price' => $this->input->post('credit_price') || 0,
-          
                 );
-         
+
                 $this->db->insert('user_order', $order_array);
-                 $last_id = $this->db->insert_id();
-                 $orderno = "OC" . date('Y/m/d') . "/" . $last_id;
+                $last_id = $this->db->insert_id();
+                $orderno = "OC" . date('Y/m/d') . "/" . $last_id;
                 $orderkey = md5($orderno);
                 $this->db->set('order_no', $orderno);
                 $this->db->set('order_key', $orderkey);
