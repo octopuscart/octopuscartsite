@@ -155,8 +155,7 @@
             .serachbox-image{
                 height:50px;width:50px;float:left;
                 margin-right: 10px;
-                    background-size: cover!important;
-    background-position: center!important;
+                
             }
             .empty-message{
                 padding:10px;

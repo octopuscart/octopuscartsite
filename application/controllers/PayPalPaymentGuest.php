@@ -107,10 +107,12 @@ class PayPalPaymentGuest extends CI_Controller {
         $data = [];
         //Paypal redirects back to this page using ReturnURL, We should receive TOKEN and Payer ID
         if ($this->input->get("token") && $this->input->get("PayerID")) {
+            
 //we will be using these two variables to execute the "DoExpressCheckoutPayment"
 //Note: we haven't received any payment yet.
             $token = $this->input->get("token");
             $payer_id = $this->input->get("PayerID");
+            $data['token'] = $token;
             $paypaldata = $this->session->userdata('session_paypal');
 
             $doexpresscheckout = '&TOKEN=' . urlencode($token) .
@@ -303,7 +305,7 @@ class PayPalPaymentGuest extends CI_Controller {
                 }
             } else {
                 //  echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
-                echo '<pre>';
+                
                 //   print_r($httpParsedResponseAr);
                 //   echo '</pre>';
             }

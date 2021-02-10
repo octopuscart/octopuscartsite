@@ -14,6 +14,8 @@ class PayPalPayment extends CI_Controller {
     }
 
     public function process() {
+        $testmode = 1;
+
         $PayPalMode = ''; // sandbox or live
         $PayPalApiUsername = paypal_api_username; //PayPal API Username
         $PayPalApiPassword = paypal_api_password; //Paypal API password
@@ -52,18 +54,24 @@ class PayPalPayment extends CI_Controller {
         }
 
         $session_cart['sub_total_price'] = $session_cart['total_price'];
+        $shippingamunt = $session_cart['shipping_price'];
+        if ($testmode) {
+            $shippingamunt = 0;
+            $session_cart['total_price'] = $session_cart['total_price'];
+        } else {
+            $session_cart['total_price'] = $session_cart['total_price'] + $shippingamunt;
+        }
 
-        $session_cart['total_price'] = $session_cart['total_price'] + $session_cart['shipping_price'];
 
-
-
-        $PayPalReturnURL = site_url("PayPalPaymentGuest/success");
-        $PayPalCancelURL = site_url("PayPalPaymentGuest/cancel");
+        $PayPalReturnURL = site_url("PayPalPayment/success");
+        $PayPalCancelURL = site_url("PayPalPayment/cancel");
 
         $paypaldata = "";
 
         $products = $session_cart['products'];
         $total_amt = $session_cart['total_price'];
+        $total_amt_sub = $session_cart['sub_total_price'];
+
         $countitem = 0;
         foreach ($products as $keyp => $valuep) {
             $ItemNumber = $valuep['sku'];
@@ -78,33 +86,45 @@ class PayPalPayment extends CI_Controller {
             $countitem++;
         }
 
-//        $discountcalculate = $total_amt - 0.01;
-//
-//        $total_amt = $total_amt - $discountcalculate;
-//        $total_amt = number_format($total_amt, 2, '.', '');
-//
-//        $paypaldata .= '&L_PAYMENTREQUEST_0_NAME' . $countitem . '=' . urlencode("GIFT DISCOUNT") .
-//                '&L_PAYMENTREQUEST_0_NUMBER' . $countitem . '=' . urlencode("GFT0001") .
-//                '&L_PAYMENTREQUEST_0_AMT' . $countitem . '=-' . urlencode($discountcalculate) .
-//                '&L_PAYMENTREQUEST_0_QTY' . $countitem . '=' . urlencode(1);
+
+
+        if ($testmode) {
+            $discountcalculate = $total_amt - 0.01;
+
+
+            $total_amt = $total_amt - $discountcalculate;
+         
+
+
+            $total_amt = number_format($total_amt, 2, '.', '');
+
+   $total_amt_sub = $total_amt;
+            $paypaldata .= '&L_PAYMENTREQUEST_0_NAME' . $countitem . '=' . urlencode("GIFT DISCOUNT") .
+                    '&L_PAYMENTREQUEST_0_NUMBER' . $countitem . '=' . urlencode("GFT0001") .
+                    '&L_PAYMENTREQUEST_0_AMT' . $countitem . '=-' . urlencode($discountcalculate) .
+                    '&L_PAYMENTREQUEST_0_QTY' . $countitem . '=' . urlencode(1);
+        }
 
         $setexpresscheckout = '&METHOD=SetExpressCheckout' .
                 '&PAYMENTREQUEST_0_PAYMENTACTION=' . urlencode("SALE") .
                 '&RETURNURL=' . urlencode($PayPalReturnURL) .
                 '&CANCELURL=' . urlencode($PayPalCancelURL);
 
-        $paypaldata .= '&NOSHIPPING=0' . '&PAYMENTREQUEST_0_ITEMAMT=' . urlencode($session_cart['sub_total_price'] ) .
-        '&PAYMENTREQUEST_0_TAXAMT=' . urlencode('0') .
-        '&PAYMENTREQUEST_0_SHIPPINGAMT=' . urlencode($session_cart['shipping_price']) .
-        '&PAYMENTREQUEST_0_HANDLINGAMT=' . urlencode('0') .
-        '&PAYMENTREQUEST_0_SHIPDISCAMT=' . urlencode('0') .
-        '&PAYMENTREQUEST_0_INSURANCEAMT=' . urlencode('0') .
-        '&PAYMENTREQUEST_0_AMT=' . urlencode($total_amt) .
-        '&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode(paypal_api_currency_code) .
-        '&LOCALECODE=GB' . //PayPal pages to match the language on your website.
-        '&LOGOIMG=https://octopuscart.com/assets/images/logo73.png' . //site logo
-        '&CARTBORDERCOLOR=000000' . //border color of cart
-        '&ALLOWNOTE=1';
+        $paypaldata .= '&NOSHIPPING=0' . '&PAYMENTREQUEST_0_ITEMAMT=' . urlencode($total_amt_sub) .
+                '&PAYMENTREQUEST_0_TAXAMT=' . urlencode('0') .
+                '&PAYMENTREQUEST_0_SHIPPINGAMT=' . urlencode($shippingamunt) .
+                '&PAYMENTREQUEST_0_HANDLINGAMT=' . urlencode('0') .
+                '&PAYMENTREQUEST_0_SHIPDISCAMT=' . urlencode('0') .
+                '&PAYMENTREQUEST_0_INSURANCEAMT=' . urlencode('0') .
+                '&PAYMENTREQUEST_0_AMT=' . urlencode($total_amt) .
+                '&PAYMENTREQUEST_0_CURRENCYCODE=' . urlencode(paypal_api_currency_code) .
+                '&LOCALECODE=GB' . //PayPal pages to match the language on your website.
+                '&LOGOIMG=https://octopuscart.com/assets/images/logo73.png' . //site logo
+                '&CARTBORDERCOLOR=000000' . //border color of cart
+                '&ALLOWNOTE=1';
+
+        echo "<pre>";
+        echo $paypaldata;
         $this->load->library('paypalclass');
         $this->session->set_userdata('session_paypal', $paypaldata);
         $session_paypal = $this->session->userdata('session_paypal');
@@ -143,6 +163,7 @@ class PayPalPayment extends CI_Controller {
             $this->load->library('paypalclass');
             $httpParsedResponseAr = $this->paypalclass->PPHttpPost('DoExpressCheckoutPayment', $doexpresscheckout . $paypaldata, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode);
 //Check if everything went ok..
+            
             if ("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) {
                 if (isset($httpParsedResponseAr["L_LONGMESSAGE0"])) {
                     $long_message = urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]);
@@ -171,8 +192,6 @@ class PayPalPayment extends CI_Controller {
                 if ("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) {
 
 
-                    $measurement_style = $this->session->userdata('measurement_style');
-                    $data['measurement_style_type'] = $measurement_style ? $measurement_style['measurement_style'] : "Please Select Size";
 
 
                     if ($this->checklogin) {
@@ -181,19 +200,34 @@ class PayPalPayment extends CI_Controller {
                         $session_cart = $this->Product_model->cartData();
                     }
 
+
+                    $session_cart['shipping_price'] = 40;
+                    if ($session_cart['total_price'] > 399) {
+                        $session_cart['shipping_price'] = 0;
+                    }
+                    if ($address['zipcode'] == 'Tsim Sha Tsui') {
+                        $session_cart['shipping_price'] = 0;
+                    }
+                    if ($address['zipcode'] == 'Pickup') {
+                        $session_cart['shipping_price'] = 0;
+                    }
+                    $session_cart['sub_total_price'] = $session_cart['total_price'];
+
+                    $session_cart['total_price'] = $session_cart['total_price'] + $session_cart['shipping_price'];
+
+
+                    $sub_total_price = $session_cart['sub_total_price'];
+                    $total_quantity = $session_cart['total_quantity'];
+                    $total_price = $session_cart['total_price'];
+                    $shipping_price = $session_cart['shipping_price'];
+
                     $user_details = $this->User_model->user_details($this->user_id);
                     $data['user_details'] = $user_details;
 
-                    $user_address_details = $this->User_model->user_address_details($this->user_id);
-                    $data['user_address_details'] = $user_address_details;
-
-                    $user_credits = $this->User_model->user_credits($this->user_id);
-                    $data['user_credits'] = $user_credits;
-
-
-
                     //place order
 
+                    $user_address_details = $this->User_model->user_address_details($this->user_id);
+                    $data['user_address_details'] = $user_address_details;
                     $address = $user_address_details[0];
 
                     $order_array = array(
@@ -209,65 +243,34 @@ class PayPalPayment extends CI_Controller {
                         'country' => $address['country'],
                         'order_date' => date('Y-m-d'),
                         'order_time' => date('H:i:s'),
-                        'amount_in_word' => $this->Product_model->convert_num_word(urldecode($httpParsedResponseAr["AMT"])),
-                        'sub_total_price' => urldecode($httpParsedResponseAr["AMT"]), //;$this->input->post('sub_total_price'),
-                        'total_price' => urldecode($httpParsedResponseAr["AMT"]),
-                        'total_quantity' => $session_cart['total_quantity'],
+                        'amount_in_word' => $this->Product_model->convert_num_word($session_cart['total_price']),
+                        'sub_total_price' => $sub_total_price,
+                        'total_price' => $session_cart['total_price'],
+                        'total_quantity' => $total_quantity,
+                        'shipping_price' => $shipping_price,
                         'status' => 'Payment Completed',
                         'payment_mode' => 'PayPal',
-                        'measurement_style' => $measurement_style['measurement_style'],
+                        'measurement_style' => '',
                         'credit_price' => $this->input->post('credit_price') || 0,
                     );
 
                     $this->db->insert('user_order', $order_array);
                     $last_id = $this->db->insert_id();
-                    $orderno = "OCT" . date('Y/m/d') . "/" . $last_id;
+                    $orderno = "OC" . date('Y/m/d') . "/" . $last_id;
                     $orderkey = md5($orderno);
                     $this->db->set('order_no', $orderno);
                     $this->db->set('order_key', $orderkey);
                     $this->db->where('id', $last_id);
                     $this->db->update('user_order');
 
-
+                    //measurwement data
 
                     $this->db->set('order_id', $last_id);
                     $this->db->where('order_id', '0');
                     $this->db->where('user_id', $this->user_id);
                     $this->db->update('cart');
 
-                    $custome_items = $session_cart['custome_items'];
-                    $custome_items_ids = implode(", ", $custome_items);
-                    $custome_items_ids_profile = implode("", $custome_items);
-                    $custome_items_nameslist = $session_cart['custome_items_name'];
-                    $custome_items_names = implode(", ", $custome_items_nameslist);
 
-                    $measurement_style_array = $measurement_style['measurement_dict'];
-
-                    if (count($measurement_style_array)) {
-                        $order_measurement_profile = array(
-                            'datetime' => date('Y-m-d H:i:s'),
-                            'order_id' => $last_id,
-                            'measurement_items' => $custome_items_names,
-                            'measurement_items_id' => $custome_items_ids,
-                            'user_id' => $this->user_id,
-                            'display_index' => '1',
-                            "profile" => "MES/" . $this->user_id . "/" . $custome_items_ids_profile . "/" . $last_id,
-                        );
-                        $this->db->insert('custom_measurement_profile', $order_measurement_profile);
-                        $mprofile_id = $this->db->insert_id();
-                        $display_index = 1;
-                        foreach ($measurement_style_array as $key => $value) {
-                            $custom_array = array(
-                                'measurement_key' => $key,
-                                'measurement_value' => $value,
-                                'display_index' => $display_index,
-                                'order_id' => $last_id,
-                                'custom_measurement_profile' => $mprofile_id
-                            );
-                            $this->db->insert('custom_measurement', $custom_array);
-                            $display_index++;
-                        }
-                    }
 
 
 
@@ -309,54 +312,15 @@ class PayPalPayment extends CI_Controller {
                     );
                     $this->db->insert('user_order_status', $order_status_data);
 
+
                     redirect('Order/orderdetails/' . $orderkey);
 
                     $this->load->view('Cart/checkoutPayment', $data);
-
-
-
-// echo '<br /><b>Stuff to store in database :</b><br /><pre>';
-                    /*
-                      #### SAVE BUYER INFORMATION IN DATABASE ###
-                      //see (http://www.sanwebe.com/2013/03/basic-php-mysqli-usage) for mysqli usage
-
-                      $buyerName = $httpParsedResponseAr["FIRSTNAME"].' '.$httpParsedResponseAr["LASTNAME"];
-                      $buyerEmail = $httpParsedResponseAr["EMAIL"];
-
-                      //Open a new connection to the MySQL server
-                      $mysqli = new mysqli('host','username','password','database_name');
-
-                      //Output any connection error
-                      if ($mysqli->connect_error) {
-                      die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
-                      }
-
-                      $insert_row = $mysqli->query("INSERT INTO BuyerTable
-                      (BuyerName,BuyerEmail,TransactionID,ItemName,ItemNumber, ItemAmount,ItemQTY)
-                      VALUES ('$buyerName','$buyerEmail','$transactionID','$ItemName',$ItemNumber, $ItemTotalPrice,$ItemQTY)");
-
-                      if($insert_row){
-                      print 'Success! ID of last inserted record is : ' .$mysqli->insert_id .'<br />';
-                      }else{
-                      die('Error : ('. $mysqli->errno .') '. $mysqli->error);
-                      }
-
-                     */
-
-                    //  echo '<pre>';
-                    //    print_r($httpParsedResponseAr);
-                    //   echo '</pre>';
                 } else {
-                    //  echo '<div style="color:red"><b>GetTransactionDetails failed:</b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
-                    //  echo '<pre>';
-                    //    print_r($httpParsedResponseAr);
-                    //    echo '</pre>';
+                    
                 }
             } else {
-                //  echo '<div style="color:red"><b>Error : </b>' . urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]) . '</div>';
-                echo '<pre>';
-                //   print_r($httpParsedResponseAr);
-                //   echo '</pre>';
+                
             }
         }
         $this->load->view('paypal/cancel', $data);
