@@ -3,22 +3,7 @@ $this->load->view('layout/header');
 ?>
 
 
-<style>
-    footer{
-        position: inherit!important;
-    }
-</style> 
-<!-- Inner Page Banner Area Start Here -->
-<section id="page-title" class="page-title-parallax page-title-center border-bottom" style="background-image: url('<?php echo base_url(); ?>assets/theme2/res/images/sections/blog.jpg');   margin-top: -30px;    padding: 100px 0px;   " data-center="" data-top-bottom="">
-    <div class="container clearfix">
-        <h1 class="font-secondary capitalize ls0" style="font-size: 62px;color:white;">Account</h1>
-    </div>
-</section>
-<!-- Inner Page Banner Area End Here -->
 
-<img src="<?php echo base_url(); ?>assets/theme2/res/images/sketch.png" style="    margin-top: -65px;
-     position: absolute;
-     z-index: 200;" />
 
 
 

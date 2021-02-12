@@ -1,16 +1,19 @@
-<div class="col-md-3">
-    <div class="side-bar shop-sidbar">
-        <nav class="woocommerce-MyAccount-navigation">
-            <ul>
-                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard profile_page active"><a href="<?php echo site_url("Account/profile"); ?>" >Profile</a></li>
-                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard address_page"><a href="<?php echo site_url("Account/address"); ?>" >Addresses</a></li>
-                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard orderlist_page"><a href="<?php echo site_url("Account/orderList"); ?>" >My Orders</a></li>
-                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard orderlist_page"><a href="<?php echo site_url("Account/credits"); ?>" >Coupon/Credits</a></li>
-                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard orderlist_page"><a href="<?php echo site_url("Account/newsletter"); ?>" >Newsletter</a></li>
-                <br/>
-                <li class="woocommerce-MyAccount-navigation-link woocommerce-MyAccount-navigation-link--dashboard logout_page"><a href="<?php echo site_url("Account/logout"); ?>" >Logout</a></li>
-            </ul>
-        </nav>
-    </div>
+<div class="col-md-3" style="height: 500px">
+  
+
+    <aside class="mt-4">
+        <div class="border-bottom border-color-1 mb-1">
+            <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">My Account</h3>
+        </div>
+        <div class="list-group">
+            <a href="<?php echo site_url("Account/profile"); ?>" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0"><i class="mr-2 fas fa-angle-right"></i> Profile</a>
+            <a href="<?php echo site_url("Account/address"); ?>" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"><i class="mr-2 fas fa-angle-right"></i> Addresses</a>
+            <a href="<?php echo site_url("Account/orderList"); ?>" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"><i class="mr-2 fas fa-angle-right"></i> My Orders</a>
+            <a href="<?php echo site_url("Account/credits"); ?>" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"><i class="mr-2 fas fa-angle-right"></i> Coupon/Credits</a>
+            <a href="<?php echo site_url("Account/newsletter"); ?>" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"><i class="mr-2 fas fa-angle-right"></i> Newsletter</a>
+            <a href="<?php echo site_url("Account/logout"); ?>" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"><i class="mr-2 fas fa-angle-right"></i> Logout</a>
+        </div>
+    </aside>
 </div>
+
 

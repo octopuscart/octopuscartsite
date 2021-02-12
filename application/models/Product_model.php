@@ -16,11 +16,11 @@ class Product_model extends CI_Model {
     }
 
     public function query_exe($query) {
-       
+
         $query = $this->db->query($query);
-        if($query){
-        return $query->result_array();
-        }else{
+        if ($query) {
+            return $query->result_array();
+        } else {
             return array();
         }
     }
@@ -841,6 +841,49 @@ where pa.product_id in ($productatrvalue) group by attribute_value_id";
             $last_id = $this->db->insert_id();
             $display_index = 1;
         }
+    }
+
+    public function newArrival() {
+        $this->db->select("title, file_name, id, category_id, price");
+        $this->db->limit(8);
+        $query = $this->db->get("products");
+        $results = $query->result_array();
+        $newproducts = [];
+        foreach ($results as $key => $value) {
+            $this->db->select("category_name, id as category_id");
+            $this->db->where("id", $value['category_id']);
+            $query = $this->db->get("category");
+            $category = $query->row_array();
+            $value = array_merge($value, $category);
+            array_push($newproducts, $value);
+        }
+        return $newproducts;
+    }
+
+    public function topProducts() {
+        $this->db->select("title, file_name, id, category_id, price");
+        $this->db->limit(18);
+        $query = $this->db->get("products");
+        $results = $query->result_array();
+        $newproducts = [];
+        foreach ($results as $key => $value) {
+            $this->db->select("category_name, id as category_id");
+            $this->db->where("id", $value['category_id']);
+            $query = $this->db->get("category");
+            $category = $query->row_array();
+            $value = array_merge($value, $category);
+            array_push($newproducts, $value);
+        }
+        $limilist = [0, 6, 12, 18];
+        $limitproducts = [];
+        for ($i = 0; $i < count($limilist) - 1; $i++) {
+            $lmobj1 = $limilist[$i];
+            $lmobj2 = 6;
+            $sliceproduct = array_slice($newproducts, $lmobj1, $lmobj2);
+            array_push($limitproducts, $sliceproduct);
+        }
+
+        return $limitproducts;
     }
 
     public function testProducts() {

@@ -8,13 +8,13 @@ $this->load->view('layout/header');
         margin: 0 auto;
     }
     .features-list {
-       border: 5px solid #fed700;
-    border-radius: 0px;
-    margin-bottom: 2.5em;
-    margin-left: 0;
-    margin-right: 0;
-    border-left: none;
-    border-right: 0px;
+        border: 5px solid #fed700;
+        border-radius: 0px;
+        margin-bottom: 2.5em;
+        margin-left: 0;
+        margin-right: 0;
+        border-left: none;
+        border-right: 0px;
     }
 </style>
 
@@ -26,154 +26,94 @@ $this->load->view('layout/header');
             <div class="container min-height-420 overflow-hidden">
                 <div class="js-slick-carousel u-slick"
                      data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 u-slick__pagination u-slick__pagination--long justify-content-start mb-3 mb-md-4 offset-xl-3 pl-2 pb-1">
-                    <div class="js-slide bg-img-hero-center">
-                        <div class="row min-height-420 py-7 py-md-0">
-                            <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
-                                <h1 class="font-size-64 text-lh-57 font-weight-light"
-                                    data-scs-animation-in="fadeInUp">
-                                    THE NEW <span class="d-block font-size-55">STANDARD</span>
-                                </h1>
-                                <h6 class="font-size-15 font-weight-bold mb-3"
-                                    data-scs-animation-in="fadeInUp"
-                                    data-scs-animation-delay="200">JSW  SMART TELEVISION 
+                    <div class="js-slide">
+                        <div class="row pt-7 py-md-0">
+                            <div class="d-none d-wd-block offset-1"></div>
+                            <div class="col-xl col col-md-6 mt-md-8 mt-lg-8">
+                                <div class="ml-xl-4">
+                                    <h6 class="font-size-15 font-weight-bold mb-2 text-cyan"
+                                        data-scs-animation-in="fadeInUp">
+                                        SHOP TO GET WHAT YOU LOVE
+                                    </h6>
+                                    <h1 class="font-size-46 text-lh-50 font-weight-light mb-8"
+                                        data-scs-animation-in="fadeInUp"
+                                        data-scs-animation-delay="200">
+                                        Shop from the latest collection of Earrings for women & girls online. 
 
-                                </h6>
-                                <div class="mb-4"
-                                     data-scs-animation-in="fadeInUp"
-                                     data-scs-animation-delay="300">
-                                    <span class="font-size-13">FROM</span>
-                                    <div class="font-size-13 font-weight-bold text-lh-45">
-                                        1Gb RAM & 8Gb ROM
-
-                                    </div>
+                                        <stong class="font-weight-bold">40% OFF</stong>
+                                    </h1>
+                                    <a href="../shop/single-product-fullwidth.html" class="btn btn-primary transition-3d-hover rounded-lg font-weight-normal py-2 px-md-7 px-3 font-size-16"
+                                       data-scs-animation-in="fadeInUp"
+                                       data-scs-animation-delay="300">
+                                        Start Buying
+                                    </a>
                                 </div>
-                                <a href="#" class="btn btn-primary transition-3d-hover rounded-lg font-weight-normal py-2 px-md-7 px-3 font-size-16"
-                                   data-scs-animation-in="fadeInUp"
-                                   data-scs-animation-delay="400">
-                                    Inquire                            
-                                </a>
                             </div>
-                            <div class="col-xl-5 col-6  d-flex align-items-center"
-                                 data-scs-animation-in="zoomIn"
-                                 data-scs-animation-delay="500">
-                                <img class="img-fluid" src="<?php echo base_url(); ?>assets/theme2/img/416X420/img1.png" alt="Image Description">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="js-slide bg-img-hero-center" data-animation-delay="0">
-                        <div class="row min-height-420 py-7 py-md-0">
-                            <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
-                                <h1 class="font-size-64 text-lh-57 font-weight-light"
-                                    data-scs-animation-in="fadeInUp">
-                                    THE NEW <span class="d-block font-size-55">STANDARD</span>
-                                </h1>
-                                <h6 class="font-size-15 font-weight-bold mb-3"
-                                    data-scs-animation-in="fadeInUp"
-                                    data-scs-animation-delay="200">UNDER FAVORABLE SMARTWATCHES
-                                </h6>
-
-                                <a href="#" class="btn btn-primary transition-3d-hover rounded-lg font-weight-normal py-2 px-md-7 px-3 font-size-16"
-                                   data-scs-animation-in="fadeInUp"
-                                   data-scs-animation-delay="400">
-                                    Inquire                            
-                                </a>
-                            </div>
-                            <div class="col-xl-5 col-6  d-flex align-items-center"
-                                 data-scs-animation-in="fadeInUp"
-                                 data-scs-animation-delay="500">
-                                <img class="img-fluid" src="<?php echo base_url(); ?>assets/theme2/img/416X420/img2.png" alt="Image Description">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="js-slide bg-img-hero-center" data-animation-delay="0">
-                        <div class="row min-height-420 py-7 py-md-0">
-                            <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
-                                <h1 class="font-size-64 text-lh-57 font-weight-light"
-                                    data-scs-animation-in="fadeInUp">
-                                    THE NEW <span class="d-block font-size-55">STANDARD</span>
-                                </h1>
-                                <h6 class="font-size-15 font-weight-bold mb-3"
-                                    data-scs-animation-in="fadeInUp"
-                                    data-scs-animation-delay="200">UNDER FAVORABLE SMARTWATCHES
-                                </h6>
-
-                                <a href="#" class="btn btn-primary transition-3d-hover rounded-lg font-weight-normal py-2 px-md-7 px-3 font-size-15"
-                                   data-scs-animation-in="fadeInUp"
-                                   data-scs-animation-delay="400">
-                                    Inquire                            
-                                </a>
-                            </div>
-                            <div class="col-xl-5 col-6  d-flex align-items-center"
+                            <div class="col-xl-5 col-6 d-flex align-items-end ml-auto ml-md-0"
                                  data-scs-animation-in="fadeInRight"
                                  data-scs-animation-delay="500">
-                                <img class="img-fluid" src="<?php echo base_url(); ?>assets/theme2/img/416X420/img3.png" alt="Image Description">
+                                <img class="img-fluid ml-auto mr-10 mr-wd-auto" src="<?php echo base_url(); ?>assets/theme2/img/416X420/neckless.png" alt="Image Description">
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
     </div>
     <!-- End Slider Section -->
-
-    <div class="home-v3-features-block animate-in-view fadeIn animated" data-animation="fadeIn">
-        <div class="features-list columns-5">
-            <div class="feature">
-                <div class="media">
-                    <div class="media-left media-middle feature-icon">
-                        <i class="ec ec-transport"></i>
-                    </div>
-                    <div class="media-body media-middle feature-text">
-                        <strong>Shipping</strong> World Wide
-                    </div>
+    <div class="container">
+        <div class="mb-6 row border rounded-lg mx-0 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+            <!-- Feature List -->
+            <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-transport font-size-46"></i>
                 </div>
-            </div><!-- .feature -->
-
-            <div class="feature">
-                <div class="media">
-                    <div class="media-left media-middle feature-icon">
-                        <i class="ec ec-customers"></i>
-                    </div>
-                    <div class="media-body media-middle feature-text">
-                        <strong>99% Positive</strong> Feedbacks
-                    </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Free Delivery</span>
+                    <div class=" text-secondary">from $300</div>
                 </div>
-            </div><!-- .feature -->
+            </div>
+            <!-- End Feature List -->
 
-            <div class="feature">
-                <div class="media">
-                    <div class="media-left media-middle feature-icon">
-                        <i class="ec ec-returning"></i>
-                    </div>
-                    <div class="media-body media-middle feature-text">
-                        <strong>Design</strong> On-Target Design
-                    </div>
+            <!-- Feature List -->
+            <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-customers font-size-56"></i>
                 </div>
-            </div><!-- .feature -->
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">99 % Customer</span>
+                    <div class=" text-secondary">Feedbacks</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
 
-            <div class="feature">
-                <div class="media">
-                    <div class="media-left media-middle feature-icon">
-                        <i class="ec ec-payment"></i>
-                    </div>
-                    <div class="media-body media-middle feature-text">
-                        <strong>Payment</strong> Secure System
-                    </div>
+            <!-- Feature List -->
+            <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-returning font-size-46"></i>
                 </div>
-            </div><!-- .feature -->
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">365 Days</span>
+                    <div class=" text-secondary">for free return</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
 
-            <div class="feature">
-                <div class="media">
-                    <div class="media-left media-middle feature-icon">
-                        <i class="ec ec-tag"></i>
-                    </div>
-                    <div class="media-body media-middle feature-text">
-                        <strong>Only Best</strong> Quality Products
-                    </div>
+            <!-- Feature List -->
+            <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-payment font-size-46"></i>
                 </div>
-            </div><!-- .feature -->
-        </div><!-- .features-list -->
-    </div><!-- .home-v3-features-block -->
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Payment</span>
+                    <div class=" text-secondary">Secure System</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--one and other section-->
     <div class="container">
@@ -188,7 +128,7 @@ $this->load->view('layout/header');
                             </div>
                             <div class="col-6 col-xl-7 col-wd-6">
                                 <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
-                                    CATCH BIG <strong>DEALS</strong> ON THE HOME APPLIANCES
+                                    UP TO  <strong>75%</strong> ON THE FASHIONS JEWELLERY
                                 </div>
                                 <div class="link text-gray-90 font-weight-bold font-size-15" href="#">
                                     Shop now
@@ -208,7 +148,7 @@ $this->load->view('layout/header');
                             </div>
                             <div class="col-6 col-xl-7 col-wd-6">
                                 <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
-                                    CATCH BIG <strong>DEALS</strong> ON THE HOME APPLIANCES
+                                    BEST <strong>OFFERS</strong> ON THE MOBILE ACCESSORIES
                                 </div>
                                 <div class="link text-gray-90 font-weight-bold font-size-15" href="#">
                                     Shop now
@@ -228,7 +168,7 @@ $this->load->view('layout/header');
                             </div>
                             <div class="col-6 col-xl-7 col-wd-6">
                                 <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
-                                    CATCH BIG <strong>DEALS</strong> ON THE HOME APPLIANCES
+                                    FASHIONS ACCESSORIES START FROM <strong>5$</strong> 
                                 </div>
                                 <div class="link text-gray-90 font-weight-bold font-size-15" href="#">
                                     Shop now
@@ -248,7 +188,7 @@ $this->load->view('layout/header');
                             </div>
                             <div class="col-6 col-xl-7 col-wd-6">
                                 <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
-                                    CATCH BIG <strong>DEALS</strong> ON THE HOME APPLIANCES
+                                    GET <strong>80%</strong> OFF ON PERSONAL CARE
                                 </div>
                                 <div class="link text-gray-90 font-weight-bold font-size-15" href="#">
                                     Shop now
@@ -264,31 +204,7 @@ $this->load->view('layout/header');
         </div>
         <!-- End Banner -->
 
-        <!--about section-->
-        <div class="mb-5 bg-gray-13" style="    border-top: 20px solid #fed700;
-             border-left: 20px solid #fed700;
 
-             ">
-            <div class="row">
-                <div class="col-md-6 mb-4" style="text-align: center">
-                    <img src="<?php echo base_url(); ?>assets/theme2/images/globe.gif" style="height: 400px;margin-top: 60px;"/>
-                </div>
-
-                <div class="col-md-6 mb-4" style="padding: 50px 20px;">
-                    <h3 class="font-size-18 font-weight-semi-bold text-gray-39 mb-4">
-                        <img src="<?php echo base_url(); ?>assets/images/logo.png" style="height: 67px;margin-top: 50px;"/>
-
-                        <br/>
-                        Innovation around the world.
-
-                    </h3>
-                    <p class="text-gray-90" style="font-size: 17px">
-                        We are manufacturers and distributors of electronics worldwide! We have various brands that we have been manufacturing for OEM and ODM for the last 13 years!We have our own in house brand called JSW which we have recently started marketing and have a variety of products under the same label.We are currently looking for partners worldwide for our brand representation and distribution.                        </p>
-
-                </div>
-            </div>
-        </div>
-        <!--end of about section-->
 
         <!-- Recently viewed -->
         <div class="mb-6">
@@ -331,22 +247,24 @@ $this->load->view('layout/header');
                      }]'>
 
                     <?php
-                    foreach ($products as $key => $pvalue) {
+                    foreach ($newproducts as $key => $pvalue) {
                         ?>
                         <div class="js-slide products-group">
                             <div class="product-item">
                                 <div class="product-item__outer h-100">
                                     <div class="product-item__inner px-wd-4 p-2 p-md-3">
                                         <div class="product-item__body pb-xl-2">
-                                            <div class="mb-2"><a href="#" class="font-size-12 text-gray-5"><?php echo $pvalue['tag']; ?></a></div>
+                                            <div class="mb-2"><a href="#" class="font-size-12 text-gray-5"><?php echo $pvalue['category_name']; ?></a></div>
                                             <h5 class="mb-1 product-item__title"><a href="#" class="text-blue font-weight-bold"><?php echo $pvalue['title']; ?></a></h5>
                                             <div class="mb-2">
-                                                <a href="#" class="d-block text-center"><img class="img-fluid" src="<?php echo base_url(); ?>assets/theme2/images/testproduct/<?php echo $pvalue['img'][0]; ?>" alt="Image Description"></a>
+                                                <a href="#" class="d-block text-center">
+                                                    <img class="img-fluid backgroundsetimage" src="<?php echo base_url(); ?>assets/theme2/img/212X200/blank.png" style="background:url('<?php echo PRODUCTIMAGELINK . $pvalue['file_name'] ?>')" alt="Image Description">
+                                                </a>
                                             </div>
                                             <div class="flex-center-between mb-1">
-                                                <div class="d-none d-xl-block prodcut-add-cart">
-                                                    <a href="<?php echo site_url('Product/productDetailsView/' . $key); ?>" class="btn-add-cart btn-add-cart__wide btn-primary transition-3d-hover">                                Inquire                            </a>
-                                                </div>
+                                                 <div class="prodcut-price">
+                                                        <div class="text-gray-100">{{<?php echo $pvalue['price']; ?>|currency:"<?php echo globle_currency;?>"}}</div>
+                                                    </div>
                                                 <div class="d-none d-xl-block prodcut-add-cart">
                                                     <a href="<?php echo site_url('Product/productDetailsView/' . $key); ?>" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
                                                 </div>
@@ -365,17 +283,12 @@ $this->load->view('layout/header');
             </div>
         </div>
         <!-- End Recently viewed -->
-
-
-
-
-      
     </div>
     <!--end of section-->
 
     <div class="container">
         <!-- Prodcut-cards-carousel -->
-        <div class="space-top-2">
+        <div class="">
             <dv class=" d-flex justify-content-between border-bottom border-color-1 flex-md-nowrap flex-wrap border-sm-bottom-0">
                 <h3 class="section-title mb-0 pb-2 font-size-22">Bestsellers</h3>
                 <ul class="nav nav-pills mb-2 pt-3 pt-md-0 mb-0 border-top border-color-1 border-md-top-0 align-items-center font-size-15 font-size-15-md flex-nowrap flex-md-wrap overflow-auto overflow-md-visble">
@@ -395,80 +308,51 @@ $this->load->view('layout/header');
             </dv>
             <div class="js-slick-carousel u-slick u-slick--gutters-2 overflow-hidden u-slick-overflow-visble pt-3 pb-6"
                  data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
-                <div class="js-slide">
-                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
 
-                        <?php
-                        foreach ($productids as $key => $value) {
-                            $productt = $products[$value];
-                            ?>
-                            <li class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
-                                <div class="product-item__outer h-100">
-                                    <div class="product-item__inner p-md-3 row no-gutters">
-                                        <div class="col col-lg-auto product-media-left">
-                                            <a href="#" class="max-width-150 d-block"><img class="img-fluid" src="<?php echo base_url(); ?>assets/theme2/images/testproduct/<?php echo $productt['img'][0]; ?>" alt="Image Description"></a>
-                                        </div>
-                                        <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
-                                            <div class="mb-4">
-                                                <div class="mb-2"><a href="#" class="font-size-12 text-gray-5"><?php echo $productt['tag']; ?></a></div>
-                                                <h5 class="product-item__title"><a href="#" class="text-blue font-weight-bold"><?php echo $productt['title']; ?></a></h5>
+                <?php
+                foreach ($topproducts as $pkey => $pvalue) {
+                    $productlist = $pvalue;
+                    ?>
+                    <div class="js-slide">
+                        <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                            <?php
+                            foreach ($productlist as $key => $value) {
+                                $productt = $value;
+                                ?>
+                                <li class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                                    <div class="product-item__outer h-100">
+                                        <div class="product-item__inner p-md-3 row no-gutters">
+                                            <div class="col col-lg-auto product-media-left">
+                                                <a href="#" class="max-width-150 d-block"><img class="img-fluid backgroundsetimage" src="<?php echo base_url(); ?>assets/theme2/img/150X140/blank.png" style="background:url('<?php echo PRODUCTIMAGELINK . $productt['file_name'] ?>')"  alt="Image Description"></a>
                                             </div>
-                                            <div class="flex-center-between mb-3">
-                                                <div class="d-none d-xl-block prodcut-add-cart">
-                                                    <a href="<?php echo site_url('Product/productDetailsView/' . $value); ?>" class="btn-add-cart btn-add-cart__wide btn-primary transition-3d-hover">                                Inquire                            </a>
+                                            <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                                <div class="mb-4">
+                                                    <div class="mb-2"><a href="#" class="font-size-12 text-gray-5"><?php echo $productt['category_name']; ?></a></div>
+                                                    <h5 class="product-item__title"><a href="#" class="text-blue font-weight-bold"><?php echo $productt['title']; ?></a></h5>
                                                 </div>
-                                                <div class="d-none d-xl-block prodcut-add-cart">
-                                                    <a href="<?php echo site_url('Product/productDetailsView/' . $value); ?>" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                <div class="flex-center-between mb-3">
+                                                    <div class="prodcut-price">
+                                                        <div class="text-gray-100">{{<?php echo $productt['price']; ?>|currency:"<?php echo globle_currency;?>"}}</div>
+                                                    </div>
+                                                    <div class="d-none d-xl-block prodcut-add-cart">
+                                                        <a href="" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                    </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
 
-                            <?php
-                        }
-                        ?>
-
-                    </ul>
-                </div>
-                <div class="js-slide">
-                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
-                        <?php
-                        foreach ($productids as $key => $value) {
-                            $productt = $products[$value];
+                                <?php
+                            }
                             ?>
-                            <li class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
-                                <div class="product-item__outer h-100">
-                                    <div class="product-item__inner p-md-3 row no-gutters">
-                                        <div class="col col-lg-auto product-media-left">
-                                            <a href="#" class="max-width-150 d-block"><img class="img-fluid" src="<?php echo base_url(); ?>assets/theme2/images/testproduct/<?php echo $productt['img'][0]; ?>" alt="Image Description"></a>
-                                        </div>
-                                        <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
-                                            <div class="mb-4">
-                                                <div class="mb-2"><a href="#" class="font-size-12 text-gray-5"><?php echo $productt['tag']; ?></a></div>
-                                                <h5 class="product-item__title"><a href="#" class="text-blue font-weight-bold"><?php echo $productt['title']; ?></a></h5>
-                                            </div>
-                                            <div class="flex-center-between mb-3">
-                                                <div class="d-none d-xl-block prodcut-add-cart">
-                                                    <a href="<?php echo site_url('Product/productDetailsView/' . $value); ?>" class="btn-add-cart btn-add-cart__wide btn-primary transition-3d-hover">                                Inquire                            </a>
-                                                </div>
-                                                <div class="d-none d-xl-block prodcut-add-cart">
-                                                    <a href="<?php echo site_url('Product/productDetailsView/' . $value); ?>" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                                </div>
-                                            </div> 
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <?php
-                        }
-                        ?>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                    <?php
+                }
+                ?>
 
             </div>
         </div>
@@ -496,9 +380,83 @@ $this->load->view('layout/header');
         <!-- End Full banner -->
 
         <!-- Brand Carousel -->
-        <div class="mb-8">
+           <!-- Recently viewed -->
+        <div class="mb-6">
+            <div class="position-relative">
+                <div class="border-bottom border-color-1 mb-2">
+                    <h3 class="section-title mb-0 pb-2 font-size-22">Recently Viewed </h3>
+                </div>
+                <div class="js-slick-carousel u-slick position-static overflow-hidden u-slick-overflow-visble pb-7 pt-2 px-1"
+                     data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-3 mt-md-0"
+                     data-slides-show="7"
+                     data-slides-scroll="1"
+                     data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
+                     data-arrow-left-classes="fa fa-angle-left right-1"
+                     data-arrow-right-classes="fa fa-angle-right right-0"
+                     data-responsive='[{
+                     "breakpoint": 1400,
+                     "settings": {
+                     "slidesToShow": 6
+                     }
+                     }, {
+                     "breakpoint": 1200,
+                     "settings": {
+                     "slidesToShow": 4
+                     }
+                     }, {
+                     "breakpoint": 992,
+                     "settings": {
+                     "slidesToShow": 3
+                     }
+                     }, {
+                     "breakpoint": 768,
+                     "settings": {
+                     "slidesToShow": 2
+                     }
+                     }, {
+                     "breakpoint": 554,
+                     "settings": {
+                     "slidesToShow": 2
+                     }
+                     }]'>
 
+                    <?php
+                    foreach ($newproducts as $key => $pvalue) {
+                        ?>
+                        <div class="js-slide products-group">
+                            <div class="product-item">
+                                <div class="product-item__outer h-100">
+                                    <div class="product-item__inner px-wd-4 p-2 p-md-3">
+                                        <div class="product-item__body pb-xl-2">
+                                            <div class="mb-2"><a href="#" class="font-size-12 text-gray-5"><?php echo $pvalue['category_name']; ?></a></div>
+                                            <h5 class="mb-1 product-item__title"><a href="#" class="text-blue font-weight-bold"><?php echo $pvalue['title']; ?></a></h5>
+                                            <div class="mb-2">
+                                                <a href="#" class="d-block text-center">
+                                                    <img class="img-fluid backgroundsetimage" src="<?php echo base_url(); ?>assets/theme2/img/212X200/blank.png" style="background:url('<?php echo PRODUCTIMAGELINK . $pvalue['file_name'] ?>')" alt="Image Description">
+                                                </a>
+                                            </div>
+                                            <div class="flex-center-between mb-1">
+                                                 <div class="prodcut-price">
+                                                        <div class="text-gray-100">{{<?php echo $pvalue['price']; ?>|currency:"<?php echo globle_currency;?>"}}</div>
+                                                    </div>
+                                                <div class="d-none d-xl-block prodcut-add-cart">
+                                                    <a href="<?php echo site_url('Product/productDetailsView/' . $key); ?>" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+                </div>
+            </div>
         </div>
+        <!-- End Recently viewed -->
         <!-- End Brand Carousel -->
     </div>
 </main>

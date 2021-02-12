@@ -78,3 +78,9 @@
 			rotateY(var(--ry, 0));
 	}
 }
+
+
+.backgroundsetimage{
+    background-size: cover!important;
+    background-position: center!important;
+}

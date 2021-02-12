@@ -12,10 +12,11 @@ class Shop extends CI_Controller {
     }
 
     public function index() {
-        $testproduct = $this->Product_model->testProducts();
-        $data['products'] = $testproduct;
-        $data['productids'] = [1, 3, 2, 6, 7, 8];
-
+        $newproducts = $this->Product_model->newArrival();
+        $data['newproducts'] = $newproducts;
+        
+        $topproducts = $this->Product_model->topProducts();
+        $data['topproducts'] = $topproducts;
 
         $this->load->view('home', $data);
     }
