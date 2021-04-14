@@ -150,13 +150,15 @@ class PaymePayment extends CI_Controller {
         $url = $this->payment_request_url;
 
         $orderdata = array(
-            "totalAmount" => 0.80,
+            "totalAmount" =>  2.81,
             "currencyCode" => "HKD",
             "notificationUri" => $notificatonurl,
             "appSuccessCallback" => $successurl,
             "appFailCallback" => $failureurl,
         );
-        $body = json_encode($orderdata);
+        echo "<br/>";
+        echo $body = json_encode($orderdata);
+        echo "<br/>";
         $this->signing_key_id = $this->skeyid;
 
         $this->access_token = $this->session->userdata('access_token');
@@ -177,6 +179,13 @@ class PaymePayment extends CI_Controller {
         $headers[] = "Authorization: $this->token_type $this->access_token";
 
         $headers[] = 'Signature: keyId="' . $this->signing_key_id . '",algorithm="hmac-sha256",headers="(request-target) Api-Version Request-Date-Time Content-Type Digest Accept Trace-Id Authorization",signature="' . $this->genSignature($post, $url) . '"';
+        echo "<br/>";
+        $headerstr = "";
+        foreach ($headers as $key => $value) {
+            $headerstr .= "'" . $value . "',";
+        }
+        echo $headerstr;
+        echo "<br/>";
         $url = $this->protocol . $this->endpoint . $url;
         $curldata = $this->useCurl($url, $headers, $body);
 
@@ -191,32 +200,39 @@ class PaymePayment extends CI_Controller {
 
         print_r($returnbody);
         $urlencode = array(
-
             "appSuccessCallback" => $returnbody->appSuccessCallback,
-
         );
         $http_build_query = http_build_query($urlencode);
 
-        echo $weblink = $returnbody->webLink."?" . $http_build_query;
+        echo $weblink = $returnbody->webLink . "?" . $http_build_query;
     }
 
     public function query($payid) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
         $notificatonurl = site_url("PaymePayment/notificaton");
-        $post = false;
-        $url = $this->payment_request_url . '/' . $payid;
-//        $url = $this->payment_request_url;
+        $post = true;
+        $url = $this->payment_request_url . "/$payid";
 
         $orderdata = array(
-            "totalAmount" => 120,
+            "totalAmount" =>  2.81,
             "currencyCode" => "HKD",
             "notificationUri" => $notificatonurl,
             "appSuccessCallback" => $successurl,
             "appFailCallback" => $failureurl,
-            "effectiveDuration" => 30,
         );
+        echo "<br/>";
+        echo $body = json_encode($orderdata);
+        echo "<br/>";
+        $this->signing_key_id = $this->skeyid;
 
+        $this->access_token = $this->session->userdata('access_token');
+        $this->token_type = $this->session->userdata('token_type');
+        date_default_timezone_set("Asia/Hong_Kong");
+        $request_date_time = gmdate("Y-m-d\TH:i:s\Z");
+
+        $this->request_date_time = $request_date_time;
+        $this->createdigest($body);
         $this->traceid();
         $headers[] = "Host: $this->endpoint";
         $headers[] = "Api-Version: $this->api_version";
@@ -228,16 +244,27 @@ class PaymePayment extends CI_Controller {
         $headers[] = "Authorization: $this->token_type $this->access_token";
 
         $headers[] = 'Signature: keyId="' . $this->signing_key_id . '",algorithm="hmac-sha256",headers="(request-target) Api-Version Request-Date-Time Content-Type Digest Accept Trace-Id Authorization",signature="' . $this->genSignature($post, $url) . '"';
-        echo $url = $this->protocol . $this->endpoint . $url;
-        $curldata = $this->useCurl($url, $headers, $body, $post);
-        echo "<pre>";
+        echo "<br/>";
+        $headerstr = "";
+        foreach ($headers as $key => $value) {
+            $headerstr .= "'" . $value . "',";
+        }
+        echo $headerstr;
+        echo "<br/>";
+        $url = $this->protocol . $this->endpoint . $url;
+        $curldata = $this->useCurl($url, $headers, $body);
+
         $response = $curldata['result'];
         $header_size = $curldata['headers'];
         $header = substr($response, 0, $header_size);
         $body = substr($response, $header_size);
         $codehas = $response;
+        echo "<pre>";
         var_dump($codehas);
-//        return json_decode($body);
+        $returnbody = json_decode($body);
+
+        print_r($returnbody);
+
     }
 
     function success() {
