@@ -41,10 +41,10 @@ class PaymePayment extends CI_Controller {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 //            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_HEADER, 1);
 
             // Disabling SSL Certificate support temporarly
-//            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             if ($fields) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
             }
