@@ -41,10 +41,10 @@ class PaymePayment extends CI_Controller {
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 //            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HEADER, 1);
+//            curl_setopt($ch, CURLOPT_HEADER, 1);
 
             // Disabling SSL Certificate support temporarly
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             if ($fields) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
             }
@@ -155,7 +155,6 @@ class PaymePayment extends CI_Controller {
             "notificationUri" => $notificatonurl,
             "appSuccessCallback" => $successurl,
             "appFailCallback" => $failureurl,
-            "effectiveDuration" => 30,
         );
         $body = json_encode($orderdata);
         $this->signing_key_id = $this->skeyid;
@@ -189,17 +188,16 @@ class PaymePayment extends CI_Controller {
         echo "<pre>";
         var_dump($codehas);
         $returnbody = json_decode($body);
-        
+
         print_r($returnbody);
         $urlencode = array(
-            "paymentRequestId"=>$returnbody->paymentRequestId,
-            "notificationUri" => $returnbody->notificationUri,
-            "appSuccessCallback" => $returnbody->appSuccessCallback,
-            "appFailCallback" => $returnbody->appFailCallback,
-        );
-       $http_build_query =  http_build_query($urlencode);
 
-        echo $weblink = "https://sacctprodmobsandbox.z7.web.core.windows.net?".$http_build_query;
+            "appSuccessCallback" => $returnbody->appSuccessCallback,
+
+        );
+        $http_build_query = http_build_query($urlencode);
+
+        echo $weblink = $returnbody->webLink."?" . $http_build_query;
     }
 
     public function query($payid) {
@@ -251,7 +249,18 @@ class PaymePayment extends CI_Controller {
     }
 
     function notificaton() {
-        echo uniqid();
+        $postdata = $this->input->post();
+        $getdata = $this->input->get();
+        $this->session->set_userdata('postdata', $postdata);
+        $this->session->set_userdata('getdata', $getdata);
+    }
+
+    function notificatonresult() {
+        $postdata = $this->session->userdata('postdata');
+        $getdata = $this->session->userdata('getdata');
+
+        print($postdata);
+        print($getdata);
     }
 
 }
