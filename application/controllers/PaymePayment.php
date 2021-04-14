@@ -189,7 +189,17 @@ class PaymePayment extends CI_Controller {
         echo "<pre>";
         var_dump($codehas);
         $returnbody = json_decode($body);
-      print_r($returnbody);
+        
+        print_r($returnbody);
+        $urlencode = array(
+            "paymentRequestId"=>$returnbody->paymentRequestId,
+            "notificationUri" => $returnbody->notificationUri,
+            "appSuccessCallback" => $returnbody->appSuccessCallback,
+            "appFailCallback" => $returnbody->appFailCallback,
+        );
+       $http_build_query =  http_build_query($urlencode);
+
+        echo $weblink = "https://sacctprodmobsandbox.z7.web.core.windows.net?".$http_build_query;
     }
 
     public function query($payid) {
