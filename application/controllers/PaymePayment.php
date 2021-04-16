@@ -31,6 +31,46 @@ class PaymePayment extends CI_Controller {
         $this->auth_request_url = "/oauth2/token";
     }
 
+    private function useCurlPut($url, $headers, $fields = null, $post = true) {
+        // Open connection
+        $ch = curl_init();
+        if ($url) {
+            // Set the url, number of POST vars, POST data
+            curl_setopt($ch, CURLOPT_URL, $url);
+//            curl_setopt($ch, CURLOPT_POST, false);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//            curl_setopt($ch, CURLOPT_HEADER, 1);
+            // Disabling SSL Certificate support temporarly
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+//            if ($fields) {
+//                curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+//            }
+            // Execute post
+            $result = curl_exec($ch);
+
+            $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            if ($result === FALSE) {
+                die('Curl failed: ' . curl_error($ch));
+            }
+            // Close connection
+            curl_close($ch);
+            $curldata = array("result" => $result, "headers" => $header_size);
+
+            $response = $curldata['result'];
+            $header_size = $curldata['headers'];
+            $header = substr($response, 0, $header_size);
+            $body = substr($response, $header_size);
+            $codehas = $response;
+            $returnbody = json_decode($response, true);
+            return $returnbody;
+        }
+    }
+
     private function useCurl($url, $headers, $fields = null, $post = true) {
         // Open connection
         $ch = curl_init();
@@ -42,28 +82,40 @@ class PaymePayment extends CI_Controller {
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 //            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_HEADER, 1);
-
             // Disabling SSL Certificate support temporarly
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             if ($fields) {
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
             }
-
             // Execute post
             $result = curl_exec($ch);
-
             $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-
-
             if ($result === FALSE) {
                 die('Curl failed: ' . curl_error($ch));
             }
-
             // Close connection
             curl_close($ch);
+            $curldata = array("result" => $result, "headers" => $header_size);
 
-            return array("result" => $result, "headers" => $header_size);
+            $response = $curldata['result'];
+            $header_size = $curldata['headers'];
+            $header = substr($response, 0, $header_size);
+            $body = substr($response, $header_size);
+            $codehas = $response;
+
+            $returnbody = json_decode($body, true);
+            return $returnbody;
         }
+    }
+
+    public function loginPayme() {
+
+        $this->load->view('payme/login');
+    }
+
+    public function startPayment() {
+        $data["access_token"] = $this->session->userdata('access_token');
+        $this->load->view('payme/dopayment', $data);
     }
 
     function login() {
@@ -75,18 +127,14 @@ class PaymePayment extends CI_Controller {
         $url = $this->protocol . $this->endpoint . $this->auth_request_url;
 
         $curldata = $this->useCurl($url, $headers, "client_id=a989d65f-52eb-4fca-abeb-971c883d50ea&client_secret=7L8_VpY21_JE6fR4Bs_lw0tVl.~kNdC-m1", true);
-        $response = $curldata['result'];
-        $header_size = $curldata['headers'];
-        $header = substr($response, 0, $header_size);
-        $body = substr($response, $header_size);
-        $codehas = json_decode($body);
 
-        $access_token = $codehas->accessToken;
-        $token_type = $codehas->tokenType;
+
+        $access_token = $curldata['accessToken'];
+        $token_type = $curldata['tokenType'];
 
         $this->session->set_userdata('access_token', $access_token);
         $this->session->set_userdata('token_type', $token_type);
-        redirect("PaymePayment/process");
+        redirect("PaymePayment/startPayment");
     }
 
     private function createdigest($body) {
@@ -114,7 +162,7 @@ class PaymePayment extends CI_Controller {
         $this->trace_id = $trace_id;
     }
 
-    private function genSignature($post, $url) {
+    private function genSignature($post, $url, $ispull = false) {
 
         $signature = "";
 
@@ -122,6 +170,10 @@ class PaymePayment extends CI_Controller {
             $method = "post";
         else
             $method = "get";
+
+        if ($ispull) {
+            $method = "put";
+        }
 
         $signature = "(request-target): " . $method . " " . $url . "\n";
         $signature .= "api-version: $this->api_version\n";
@@ -132,147 +184,113 @@ class PaymePayment extends CI_Controller {
         $signature .= "trace-id: $this->trace_id\n";
         $signature .= "authorization: $this->token_type $this->access_token";
 
-        echo ("Signature string: $signature\n");
 
         $signature_hash = base64_encode(
                 hash_hmac("sha256", $signature, $this->signing_key, true));
 
-        echo ("Signature hash: $signature_hash\n");
 
         return $signature_hash;
     }
 
-    public function process() {
+    private function createHeader($body, $post, $url, $method = false) {
+        $this->signing_key_id = $this->skeyid;
+
+        $this->access_token = $this->session->userdata('access_token');
+        $this->token_type = $this->session->userdata('token_type');
+        date_default_timezone_set("Asia/Hong_Kong");
+        $request_date_time = gmdate("Y-m-d\TH:i:s\Z");
+
+        $this->session->set_userdata('request_date_time', $request_date_time);
+
+
+        $this->request_date_time = $request_date_time;
+        $this->createdigest($body);
+        $this->traceid();
+        $this->session->set_userdata('trace_id', $this->trace_id);
+
+        $headers[] = "Host: $this->endpoint";
+        $headers[] = "Api-Version: $this->api_version";
+        $headers[] = "Request-Date-Time: $this->request_date_time";
+        $headers[] = "Content-Type: $this->content_type";
+        $headers[] = "Digest: SHA-256=$this->digest";
+        $headers[] = "Accept: $this->accept";
+        $headers[] = "Trace-Id: $this->trace_id";
+        $headers[] = "Authorization: $this->token_type $this->access_token";
+
+        $signatures = $this->genSignature($post, $url, $method);
+
+        $headers[] = 'Signature: keyId="' . $this->signing_key_id . '",algorithm="hmac-sha256",headers="(request-target) Api-Version Request-Date-Time Content-Type Digest Accept Trace-Id Authorization",signature="' . $signatures . '"';
+        return $headers;
+    }
+
+    public function process($amount) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
         $notificatonurl = site_url("PaymePayment/notificaton");
         $post = true;
         $url = $this->payment_request_url;
-
         $orderdata = array(
-            "totalAmount" =>  2.81,
+            "totalAmount" => $amount,
             "currencyCode" => "HKD",
             "notificationUri" => $notificatonurl,
             "appSuccessCallback" => $successurl,
             "appFailCallback" => $failureurl,
+            "effectiveDuration" => 15,
         );
-        echo "<br/>";
-        echo $body = json_encode($orderdata);
-        echo "<br/>";
-        $this->signing_key_id = $this->skeyid;
-
-        $this->access_token = $this->session->userdata('access_token');
-        $this->token_type = $this->session->userdata('token_type');
-        date_default_timezone_set("Asia/Hong_Kong");
-        $request_date_time = gmdate("Y-m-d\TH:i:s\Z");
-
-        $this->request_date_time = $request_date_time;
-        $this->createdigest($body);
-        $this->traceid();
-        $headers[] = "Host: $this->endpoint";
-        $headers[] = "Api-Version: $this->api_version";
-        $headers[] = "Request-Date-Time: $this->request_date_time";
-        $headers[] = "Content-Type: $this->content_type";
-        $headers[] = "Digest: SHA-256=$this->digest";
-        $headers[] = "Accept: $this->accept";
-        $headers[] = "Trace-Id: $this->trace_id";
-        $headers[] = "Authorization: $this->token_type $this->access_token";
-
-        $headers[] = 'Signature: keyId="' . $this->signing_key_id . '",algorithm="hmac-sha256",headers="(request-target) Api-Version Request-Date-Time Content-Type Digest Accept Trace-Id Authorization",signature="' . $this->genSignature($post, $url) . '"';
-        echo "<br/>";
-        $headerstr = "";
-        foreach ($headers as $key => $value) {
-            $headerstr .= "'" . $value . "',";
-        }
-        echo $headerstr;
-        echo "<br/>";
+        $body = json_encode($orderdata);
+        $headers = $this->createHeader($body, $post, $url);
         $url = $this->protocol . $this->endpoint . $url;
         $curldata = $this->useCurl($url, $headers, $body);
+        $paymentRequestId = isset($curldata["paymentRequestId"]) ? $curldata["paymentRequestId"] : "";
+        $this->session->set_userdata('paymentRequestId', $paymentRequestId);
+        $data["paymentdata"] = $curldata;
 
-        $response = $curldata['result'];
-        $header_size = $curldata['headers'];
-        $header = substr($response, 0, $header_size);
-        $body = substr($response, $header_size);
-        $codehas = $response;
-        echo "<pre>";
-        var_dump($codehas);
-        $returnbody = json_decode($body);
-
-        print_r($returnbody);
-        $urlencode = array(
-            "appSuccessCallback" => $returnbody->appSuccessCallback,
-        );
-        $http_build_query = http_build_query($urlencode);
-
-        echo $weblink = $returnbody->webLink . "?" . $http_build_query;
+        $this->load->view('payme/payrequest', $data);
     }
 
     public function query($payid) {
+        $post = false;
+        $url = $this->payment_request_url . '/' . $payid;
+        $body = null;
+        $headers = $this->createHeader($body, $post, $url);
+        $url = $this->protocol . $this->endpoint . $url;
+        $curldata = $this->useCurl($url, $headers, $body, $post);
+        return ($curldata);
+    }
+
+    public function cancel($payid) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
         $notificatonurl = site_url("PaymePayment/notificaton");
-        $post = true;
-        $url = $this->payment_request_url . "/$payid";
+        $post = false;
+        $url = $this->payment_request_url . '/' . $payid . "/cancel";
 
-        $orderdata = array(
-            "totalAmount" =>  2.81,
-            "currencyCode" => "HKD",
-            "notificationUri" => $notificatonurl,
-            "appSuccessCallback" => $successurl,
-            "appFailCallback" => $failureurl,
-        );
-        echo "<br/>";
-        echo $body = json_encode($orderdata);
-        echo "<br/>";
-        $this->signing_key_id = $this->skeyid;
+        $body = null;
+        $method = "put";
+        $headers = $this->createHeader($body, $post, $url, $method);
 
-        $this->access_token = $this->session->userdata('access_token');
-        $this->token_type = $this->session->userdata('token_type');
-        date_default_timezone_set("Asia/Hong_Kong");
-        $request_date_time = gmdate("Y-m-d\TH:i:s\Z");
-
-        $this->request_date_time = $request_date_time;
-        $this->createdigest($body);
-        $this->traceid();
-        $headers[] = "Host: $this->endpoint";
-        $headers[] = "Api-Version: $this->api_version";
-        $headers[] = "Request-Date-Time: $this->request_date_time";
-        $headers[] = "Content-Type: $this->content_type";
-        $headers[] = "Digest: SHA-256=$this->digest";
-        $headers[] = "Accept: $this->accept";
-        $headers[] = "Trace-Id: $this->trace_id";
-        $headers[] = "Authorization: $this->token_type $this->access_token";
-
-        $headers[] = 'Signature: keyId="' . $this->signing_key_id . '",algorithm="hmac-sha256",headers="(request-target) Api-Version Request-Date-Time Content-Type Digest Accept Trace-Id Authorization",signature="' . $this->genSignature($post, $url) . '"';
-        echo "<br/>";
-        $headerstr = "";
-        foreach ($headers as $key => $value) {
-            $headerstr .= "'" . $value . "',";
-        }
-        echo $headerstr;
-        echo "<br/>";
         $url = $this->protocol . $this->endpoint . $url;
-        $curldata = $this->useCurl($url, $headers, $body);
+        $curldata = $this->useCurlPut($url, $headers, $body, $post);
 
-        $response = $curldata['result'];
-        $header_size = $curldata['headers'];
-        $header = substr($response, 0, $header_size);
-        $body = substr($response, $header_size);
-        $codehas = $response;
-        echo "<pre>";
-        var_dump($codehas);
-        $returnbody = json_decode($body);
 
-        print_r($returnbody);
 
+        $data["paymentdata"] = $curldata;
+        $this->load->view('payme/paycancel', $data);
     }
 
     function success() {
-        
+        $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
+        $curldata = $this->query($paymentRequestId);
+        $data["paymentdata"] = $curldata;
+
+        $this->load->view('payme/success', $data);
     }
 
     function failure() {
-        
+        $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
+        $curldata = $this->query($paymentRequestId);
+        $data["paymentdata"] = $curldata;
+        $this->load->view('payme/failed', $data);
     }
 
     function notificaton() {

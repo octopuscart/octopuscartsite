@@ -84,3 +84,8 @@
     background-size: cover!important;
     background-position: center!important;
 }
+
+.responsedatatd{
+    display: inline-block;
+    width:70%;
+}
