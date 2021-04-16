@@ -23,7 +23,7 @@ $this->load->view('layout/header_1');
                 <div class="col-md-12">
                     <div class="ml-md-3 mb-5">
 
-                        <a href="<?php echo site_url("PaymePayment/loginPayme"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-returning mr-2 font-size-20"></i>Restart</a>
+                        <a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-returning mr-2 font-size-20"></i>Restart</a>
 
 
                     </div>

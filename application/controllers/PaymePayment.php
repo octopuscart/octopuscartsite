@@ -122,6 +122,21 @@ class PaymePayment extends CI_Controller {
     }
 
     public function startPayment() {
+        $headers[] = "Content-Type: application/x-www-form-urlencoded";
+        $headers[] = "Accept: application/json";
+        $headers[] = "Authorization:noauth";
+        $headers[] = "Api-Version: $this->api_version";
+
+        $url = $this->protocol . $this->endpoint . $this->auth_request_url;
+
+        $curldata = $this->useCurl($url, $headers, "client_id=a989d65f-52eb-4fca-abeb-971c883d50ea&client_secret=7L8_VpY21_JE6fR4Bs_lw0tVl.~kNdC-m1", true);
+
+
+        $access_token = $curldata['accessToken'];
+        $token_type = $curldata['tokenType'];
+
+        $this->session->set_userdata('access_token', $access_token);
+        $this->session->set_userdata('token_type', $token_type);
         $data["access_token"] = $this->session->userdata('access_token');
         $data["paymentlist"] = $this->paymentlist;
         $this->load->view('payme/dopayment', $data);

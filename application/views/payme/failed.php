@@ -19,7 +19,7 @@ $this->load->view('layout/header_1');
                  <h2><i class="fa fa-times" style="color:red"></i>&nbsp;&nbsp;&nbsp;Order Unsuccessful</h2>
                 <p>Your order payment failed.</p>
                 <div class="ml-md-3">
-                    <a href="<?php echo site_url("PaymePayment/loginPayme"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-returning mr-2 font-size-20"></i>Restart</a>
+                    <a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-returning mr-2 font-size-20"></i>Restart</a>
                 </div>
 <!--                <table class="table table-borderd">
                     <?php

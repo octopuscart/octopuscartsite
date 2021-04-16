@@ -45,7 +45,7 @@ $this->load->view('layout/header_1');
                             <?php
                         } else {
                             ?>
-                            <a href="<?php echo site_url("PaymePayment/loginPayme"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Logged out go back</a>
+                            <a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Logged out go back</a>
 
                             <?php
                         }
