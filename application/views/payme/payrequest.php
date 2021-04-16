@@ -1,5 +1,5 @@
 <?php
-$this->load->view('layout/header_1');
+$this->load->view('layout/header');
 ?> <!-- ========== MAIN CONTENT ========== -->
 <main id="content" role="main">
     <div class="bg-img-hero mb-8" style="background-image: url(<?php echo base_url(); ?>assets/theme2/images/aboutback.jpg);">
