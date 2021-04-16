@@ -5,7 +5,7 @@ $this->load->view('layout/header_1');
     <div class="bg-img-hero mb-14" style="background-image: url(<?php echo base_url(); ?>assets/theme2/images/aboutback.jpg);">
         <div class="container">
             <div class="flex-content-center max-width-620-lg flex-column mx-auto text-center ">
-                <h1 class="h1 font-weight-bold">Pay Using Payme</h1>
+                <h1 class="h1 font-weight-bold">Select Your Package</h1>
                 <p class="text-gray-39 font-size-18 text-lh-default">
                 </p>
             </div>
@@ -15,9 +15,10 @@ $this->load->view('layout/header_1');
     <div class="container mb-8 mb-lg-0">
         <div class="row mb-8">
 
-            <label>     <input type="checkbox" ng-model="showtoken" ng-init="showtoken = false" /> Show Token</label>
+<!--            <label>     <input type="checkbox" ng-model="showtoken" ng-init="showtoken = false" /> Show Token</label>
             <p  style="white-space: normal;
                 width: 100%;"><input ng-if="showtoken" type="text" class="form-control" value="<?php echo $access_token; ?>"></p>
+           -->
             <div class="row">
 
                 <?php
@@ -34,8 +35,15 @@ $this->load->view('layout/header_1');
                     <div class="col-md-3">
                         <div class="card" style="padding: 15px;">
                             <h2 style="font-size: 15px;font-weight: bold"><?php echo $value["title"]; ?></h2>
-                            <p  style="font-size: 12px;height:30px;"><?php echo $value["status"]; ?></p>
+                            <!--<p  style="font-size: 12px;height:30px;"><?php echo $value["status"]; ?></p>-->
                             <h3 style="font-size: 13px">Price: <?php echo $value["amt"]; ?></h3>
+                            <p>
+                                <select class="form-control">
+                                    <option>Select Payment Method</option>
+                                    <option>PayMe</option>
+                                    <option>Bank Transfer</option>
+                                </select>
+                            </p>
                             <a href="<?php echo site_url("PaymePayment/process/" . $value["amt"]); ?>" class="btn px-5 btn-primary-dark transition-3d-hover"  ><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Order Now</a>
                         </div>
                     </div>

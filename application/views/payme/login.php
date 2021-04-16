@@ -14,9 +14,20 @@ $this->load->view('layout/header_1');
 
     <div class="container mb-8 mb-lg-0">
         <div class="row mb-8">
-            <div class="ml-md-3">
-                <a href="<?php echo site_url("PaymePayment/login");?>" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Order Now</a>
+            <div class="col-md-3">
+                <img src="<?php echo base_url(); ?>assets/paymentstatus/payme-logo-white@2x.png" style="height: 100px;">
+
             </div>
+            <div class="col-md-9">
+                <h2>
+                    You have selected PayMe as your payment method and will be redirected to the PayMe app to complete payment.
+                </h2>
+                 <div class="ml-md-3">
+                <a href="<?php echo site_url("PaymePayment/login"); ?>" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Order Now</a>
+            </div>
+            </div>
+
+           
         </div>
 
     </div>

@@ -29,6 +29,14 @@ class PaymePayment extends CI_Controller {
         $this->api_version = "0.12";
         $this->payment_request_url = "/payments/paymentrequests";
         $this->auth_request_url = "/oauth2/token";
+        $this->paymentlist = array(
+            "1.80" => array("amt" => "1.80", "status" => "Normal expiry", "title" => "Package 1",),
+            "1.81" => array("amt" => "1.81", "status" => "Payment success", "title" => "Package 2"),
+            "1.77" => array("amt" => "1.77", "status" => "Payment failure", "title" => "Package 3"),
+            "1.83" => array("amt" => "1.83", "status" => "Error when cancelling a payment request that is being processed", "title" => "Package 4"),
+            "1.44" => array("amt" => "1.44", "status" => "Server Error - No PayCode", "title" => "Package 5"),
+            "1.45" => array("amt" => "1.45", "status" => "Server Error - No Status", "title" => "Package 5"),
+        );
     }
 
     private function useCurlPut($url, $headers, $fields = null, $post = true) {
@@ -109,12 +117,13 @@ class PaymePayment extends CI_Controller {
     }
 
     public function loginPayme() {
-
-        $this->load->view('payme/login');
+        $data["paymentlist"] = $this->paymentlist;
+        $this->load->view('payme/login', $data);
     }
 
     public function startPayment() {
         $data["access_token"] = $this->session->userdata('access_token');
+        $data["paymentlist"] = $this->paymentlist;
         $this->load->view('payme/dopayment', $data);
     }
 
@@ -244,6 +253,7 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = isset($curldata["paymentRequestId"]) ? $curldata["paymentRequestId"] : "";
         $this->session->set_userdata('paymentRequestId', $paymentRequestId);
         $data["paymentdata"] = $curldata;
+        $data["paymentlist"] = $this->paymentlist;
 
         $this->load->view('payme/payrequest', $data);
     }
@@ -282,6 +292,7 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
+        $data["paymentlist"] = $this->paymentlist;
 
         $this->load->view('payme/success', $data);
     }
@@ -290,6 +301,7 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
+        $data["paymentlist"] = $this->paymentlist;
         $this->load->view('payme/failed', $data);
     }
 
