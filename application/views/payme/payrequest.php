@@ -15,8 +15,9 @@ $this->load->view('layout/header');
     <div class="container mb-lg-0">
         <div class="row ">
             <?php
+     
             $amount = isset($paymentdata['totalAmount']) ? $paymentdata['totalAmount'] : "";
-            $package = $paymentlist[$amount];
+            $package = $paymentlist[$ramount];
             $paymentdata2 = $paymentdata;
             $paylink = isset($paymentdata2['webLink']) ? $paymentdata2['webLink'] : "";
             $paymentid = isset($paymentdata2['paymentRequestId']) ? $paymentdata2['paymentRequestId'] : "";

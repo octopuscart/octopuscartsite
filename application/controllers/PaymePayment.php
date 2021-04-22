@@ -269,6 +269,7 @@ class PaymePayment extends CI_Controller {
         $this->session->set_userdata('paymentRequestId', $paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["paymentlist"] = $this->paymentlist;
+        $data["ramount"] = $amount;
 
         $this->load->view('payme/payrequest', $data);
     }
