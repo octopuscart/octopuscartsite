@@ -28,7 +28,7 @@ $this->load->view('layout/header');
                 <div class="col-md-12">
                     <div class="ml-md-3 mb-5">
                         <h2>Package: <?php echo $package["title"]; ?></h2>
-                        <b>Price: HKD<?php echo $amount; ?></b>
+                        <b>Price: HKD<?php echo $ramount; ?></b>
                         <hr/>
                         <ul>
                             <li>3 Months Validity </li>
