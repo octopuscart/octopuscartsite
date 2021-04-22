@@ -55,7 +55,7 @@ $this->load->view('layout/header');
                         </p>
                     </div>
                 </div>
-<!--                <table class="table table-borderd">
+                <table class="table table-borderd">
                 <?php
                 foreach ($paymentdata2 as $key => $value) {
                     echo "<tr>";
@@ -64,7 +64,7 @@ $this->load->view('layout/header');
                     echo "</tr>";
                 }
                 ?>
-                </table>-->
+                </table>
             </div>
             <div class="col-md-2"></div>
 
