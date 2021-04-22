@@ -19,6 +19,7 @@ $this->load->view('layout/header');
             <div class="col-md-6" style="text-align: center">
                 <h2><i class="fa fa-check-circle" style="color:green"></i>&nbsp;&nbsp;&nbsp;Order Successful</h2>
                 <p>Your order has been placed, please check your email.</p>
+                <p><?php echo $paymentRequestId;?></p>
                 <div class="ml-md-3">
                     <a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-primary-dark transition-3d-hover"><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Order Again</a>
                 </div>

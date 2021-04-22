@@ -309,7 +309,7 @@ class PaymePayment extends CI_Controller {
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["paymentlist"] = $this->paymentlist;
-
+        $data["paymentRequestId"] = $paymentRequestId;
         $this->load->view('payme/success', $data);
     }
 
@@ -318,6 +318,7 @@ class PaymePayment extends CI_Controller {
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["paymentlist"] = $this->paymentlist;
+        $data["paymentRequestId"] = $paymentRequestId;
         $this->load->view('payme/failed', $data);
     }
 

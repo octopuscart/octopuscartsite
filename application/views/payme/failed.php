@@ -21,6 +21,7 @@ $this->load->view('layout/header');
                 <div class="ml-md-3">
                     <a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-returning mr-2 font-size-20"></i>Restart</a>
                 </div>
+                     <p><?php echo $paymentRequestId;?></p>
                 <table class="table table-borderd">
                     <?php
                     foreach ($paymentdata as $key => $value) {
