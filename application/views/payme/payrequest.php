@@ -46,7 +46,11 @@ $this->load->view('layout/header');
                             <?php
                         } else {
                             ?>
-                            <a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Logged out go back</a>
+                              <a href="<?php echo $paylink; ?>" class="btn" target="_blank"><img src="<?php echo base_url(); ?>assets/paymentstatus/payme-button-red.png"></a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a href="<?php echo site_url("PaymePayment/cancel/" . $paymentid); ?>" class="btn px-5 btn-primary-dark transition-3d-hover btn-danger" ><i class="ec ec-close-remove mr-2 font-size-20"></i> Cancel</a>
+
+                            <!--<a href="<?php echo site_url("PaymePayment/startPayment"); ?>" class="btn px-5 btn-danger" ><i class="ec ec-add-to-cart mr-2 font-size-20"></i> Logged out go back</a>-->
 
                             <?php
                         }
