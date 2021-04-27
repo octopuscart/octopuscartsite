@@ -60,9 +60,9 @@ class Api extends REST_Controller {
             $user_address_details = $this->session->userdata('shipping_address');
         }
         if ($user_address_details) {
-            
+
             $addresscheck2 = $this->session->userdata('shipping_address');
-            
+
             if ($user_address_details['zipcode'] == 'Tsim Sha Tsui') {
                 $session_cart['shipping_price'] = 0;
             }
@@ -389,6 +389,16 @@ class Api extends REST_Controller {
     function orderMailVender_get($order_id) {
         // $this->Product_model->order_mail_to_vendor($order_id);
         $this->response("hell");
+    }
+
+    function paymewebhook($orderkey) {
+        $postdata = $this->post();
+        $notifydata = array(
+            "order_id" => $orderkey,
+            "payment_data" => json_encode($postdata),
+            "datetime" => date('Y-m-d H:i:s')
+        );
+        $this->db->insert('payme_status', $notifydata);
     }
 
 }

@@ -224,7 +224,8 @@ class PaymePayment extends CI_Controller {
     public function payMeprocess($order_key) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
-        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
+//        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
+        $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
         $total_price = (($order_details['order_data']->total_price) * 8) + 0.81;
@@ -307,7 +308,7 @@ class PaymePayment extends CI_Controller {
     }
 
     function notificaton($orderkey) {
-        $postdata = $this->input->post();
+        $postdata = $_POST;
         $notifydata = array(
             "order_id" => $orderkey,
             "payment_data" => json_encode($postdata),
