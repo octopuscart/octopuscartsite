@@ -228,7 +228,7 @@ class PaymePayment extends CI_Controller {
         $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = (($order_details['order_data']->total_price) * 8) + 0.81;
+        $total_price = (1) + 0.81;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
