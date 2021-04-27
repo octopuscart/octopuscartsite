@@ -125,7 +125,7 @@ $this->load->view('layout/header');
 
 
                         var update_qrcode = function () {
-                            var text = "<?php echo $paymentdata2["webLink"]; ?>".replace(/^[\s\u3000]+|[\s\u3000]+$/g, '');
+                            var text = "<?php echo $paymentdata2["webLink"]; ?>";
                             var m = 'Byte';
                             var mb = 'UTF-8';
                             var qr = create_qrcode(text, "0", "Q", m, mb);
