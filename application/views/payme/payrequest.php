@@ -129,7 +129,7 @@ $this->load->view('layout/header');
                             var m = 'Byte';
                             var mb = 'UTF-8';
                             var qr = create_qrcode(text, "0", "Q", m, mb);
-                            var size = "300";
+                            var size = "500";
                             var canvas = document.getElementById('payCodeCanvas');
                             var ctx = canvas.getContext('2d');
                             var imgobj = document.createElement("IMG");
