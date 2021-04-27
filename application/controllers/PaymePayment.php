@@ -224,8 +224,8 @@ class PaymePayment extends CI_Controller {
     public function payMeprocess($order_key) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
-//        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
-        $notificatonurl = site_url("Api/paymewebhook/$order_key");
+        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
+//        $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
         $total_price = (1) + 0.81;
