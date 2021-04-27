@@ -44,7 +44,7 @@ $this->load->view('layout/header');
                             <li>3. Complete payment in the app and wait for confirmation.	</li>
                         </ul>
                     </div>
-                    <table class="table table-borderd" style="display: none">
+                    <table class="table table-borderd" style="display: block">
                         <?php
                         foreach ($paymentdata2 as $key => $value) {
                             echo "<tr>";
