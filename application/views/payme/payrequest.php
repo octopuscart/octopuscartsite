@@ -139,7 +139,7 @@ $this->load->view('layout/header');
                             canvas.height = size;
                             ctx.setTransform(1, 0, 0, 1, 0, 0);
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
-                            drawPayCode(qr, canvas, 7, logo, true);
+                            drawPayCode(qr, canvas, 7, logo, false);
                         };
 
                         update_qrcode();
