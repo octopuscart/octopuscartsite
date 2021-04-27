@@ -33,7 +33,7 @@
                 ?>
 
                 <div class="border-bottom border-color-1 mb-2">
-                    <h3 class="section-title mb-0 pb-2 font-size-25">Shopping Cart</h3>
+                    <h3 class="section-title mb-0 pb-2 font-size-18">Shopping Cart</h3>
                 </div>
                 <p class="cardp">
                     <!-- Product Content -->
@@ -66,7 +66,7 @@
                 ?>
 
                 <div class="border-bottom border-color-1 mb-2">
-                    <h3 class="section-title mb-0 pb-2 font-size-25">Login Details</h3>
+                    <h3 class="section-title mb-0 pb-2 font-size-18">Login Details</h3>
                 </div>
                 <p class="cardp">
                     <i class="fa fa-user"></i> <?php echo $this->checklogin["first_name"] . " " . $this->checklogin["last_name"] ?>
@@ -86,7 +86,7 @@
                 ?>
 
                 <div class="border-bottom border-color-1 mb-2">
-                    <h3 class="section-title mb-0 pb-2 font-size-25">Shipping Details</h3>
+                    <h3 class="section-title mb-0 pb-2 font-size-18">Shipping Details</h3>
                 </div>
                 <p class="cardp">
 

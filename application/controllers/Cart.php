@@ -305,6 +305,10 @@ class Cart extends CI_Controller {
                     case 'WeChat':
                         redirect('Order/orderPayment/' . $orderkey . "/WECHAT");
                         break;
+                    case "PayMe":
+                        redirect('PaymePayment/initPaymeLogin/' . $orderkey);
+                        break;
+                    
                     default:
                         redirect('Order/orderdetails/' . $orderkey);
                 }

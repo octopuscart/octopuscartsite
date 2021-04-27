@@ -121,7 +121,7 @@ class PaymePayment extends CI_Controller {
         $this->load->view('payme/login', $data);
     }
 
-    function initPaymeLogin($orderkey) {
+    public function startPayment() {
         $headers[] = "Content-Type: application/x-www-form-urlencoded";
         $headers[] = "Accept: application/json";
         $headers[] = "Authorization:noauth";
@@ -132,7 +132,23 @@ class PaymePayment extends CI_Controller {
         $token_type = $curldata['tokenType'];
         $this->session->set_userdata('access_token', $access_token);
         $this->session->set_userdata('token_type', $token_type);
-        redirect("PaymePayment/payMeprocess/$orderkey");
+        $data["access_token"] = $this->session->userdata('access_token');
+        $data["paymentlist"] = $this->paymentlist;
+        $this->load->view('payme/dopayment', $data);
+    }
+
+    function startPaymePayment() {
+        $headers[] = "Content-Type: application/x-www-form-urlencoded";
+        $headers[] = "Accept: application/json";
+        $headers[] = "Authorization:noauth";
+        $headers[] = "Api-Version: $this->api_version";
+        $url = $this->protocol . $this->endpoint . $this->auth_request_url;
+        $curldata = $this->useCurl($url, $headers, "client_id=a989d65f-52eb-4fca-abeb-971c883d50ea&client_secret=7L8_VpY21_JE6fR4Bs_lw0tVl.~kNdC-m1", true);
+        $access_token = $curldata['accessToken'];
+        $token_type = $curldata['tokenType'];
+        $this->session->set_userdata('access_token', $access_token);
+        $this->session->set_userdata('token_type', $token_type);
+        redirect("PaymePayment/startPayment");
     }
 
     private function createdigest($body) {
@@ -221,29 +237,19 @@ class PaymePayment extends CI_Controller {
         return $headers;
     }
 
-    public function payMeprocess($order_key) {
+    public function process($amount) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
-        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
+        $notificatonurl = site_url("PaymePayment/notificaton");
         $post = true;
-        $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = (($order_details['order_data']->total_price) * 8) + 0.81;
-        $orderno = $order_details['order_data']->order_no;
-        $data["order_amount"] = $total_price;
-        $data["cart_data"] = $order_details['cart_data'];
-
-
         $url = $this->payment_request_url;
         $orderdata = array(
-            "totalAmount" => $total_price,
+            "totalAmount" => $amount,
             "currencyCode" => "HKD",
             "notificationUri" => $notificatonurl,
             "appSuccessCallback" => $successurl,
             "appFailCallback" => $failureurl,
             "effectiveDuration" => 15,
-            "merchantData" => array(
-                "orderId" => $orderno,
-            ),
         );
         $body = json_encode($orderdata);
         $headers = $this->createHeader($body, $post, $url);
@@ -252,8 +258,8 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = isset($curldata["paymentRequestId"]) ? $curldata["paymentRequestId"] : "";
         $this->session->set_userdata('paymentRequestId', $paymentRequestId);
         $data["paymentdata"] = $curldata;
-        $data["order_details"] = $order_details;
-
+        $data["paymentlist"] = $this->paymentlist;
+        $data["ramount"] = $amount;
 
         $this->load->view('payme/payrequest', $data);
     }
@@ -306,14 +312,11 @@ class PaymePayment extends CI_Controller {
         $this->load->view('payme/failed', $data);
     }
 
-    function notificaton($orderkey) {
+    function notificaton() {
         $postdata = $this->input->post();
-        $notifydata = array(
-            "order_id" => $orderkey,
-            "payment_data" => json_encode($postdata),
-            "datetime" => date('Y-m-d H:i:s')
-        );
-        $this->db->insert('payme_status', $notifydata);
+        $getdata = $this->input->get();
+        $this->session->set_userdata('postdata', $postdata);
+        $this->session->set_userdata('getdata', $getdata);
     }
 
     function notificatonresult() {
