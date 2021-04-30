@@ -29,7 +29,7 @@ class PaymePayment extends CI_Controller {
         $this->api_version = "0.12";
         $this->payment_request_url = "/payments/paymentrequests";
         $this->auth_request_url = "/oauth2/token";
-        $this->testamount = 7.77;
+        $this->testamount = 8.81;
         $this->paymentlist = array(
             "1.80" => array("amt" => "1.80", "status" => "Normal expiry", "title" => "Package 1",),
             "1.81" => array("amt" => "1.81", "status" => "Payment success", "title" => "Package 2"),
@@ -222,14 +222,14 @@ class PaymePayment extends CI_Controller {
         return $headers;
     }
 
-    public function payMeprocess($order_key) {
+    public function payMeprocess($order_key, $is_mobile = "") {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
         $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
 //        $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price =  $this->testamount;
+        $total_price = $this->testamount;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
@@ -251,14 +251,17 @@ class PaymePayment extends CI_Controller {
         $headers = $this->createHeader($body, $post, $url);
         $url = $this->protocol . $this->endpoint . $url;
         $curldata = $this->useCurl($url, $headers, $body);
-  
+
         $paymentRequestId = isset($curldata["paymentRequestId"]) ? $curldata["paymentRequestId"] : "";
         $this->session->set_userdata('paymentRequestId', $paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["order_details"] = $order_details;
 
-
-        $this->load->view('payme/payrequest', $data);
+        if ($is_mobile) {
+            $this->load->view('payme/payrequest_mobile', $data);
+        } else {
+            $this->load->view('payme/payrequest', $data);
+        }
     }
 
     public function query($payid) {
@@ -272,7 +275,7 @@ class PaymePayment extends CI_Controller {
     }
 
     function checkstatus() {
-       echo $paymentRequestId = $this->session->userdata('paymentRequestId');
+        echo $paymentRequestId = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         print_r($curldata);
     }
@@ -329,7 +332,7 @@ class PaymePayment extends CI_Controller {
         $data["order_details"] = $order_details;
         $this->load->view('payme/failed', $data);
     }
-    
+
     function expiry($order_key) {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);

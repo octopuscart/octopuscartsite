@@ -17,12 +17,12 @@ $this->load->view('layout/header');
             <div class="col-md-1">
 
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 text-center">
 
                 <div class="ml-md-3 ">
-                                                                                <img src="<?php echo base_url(); ?>assets/paymeassets/payme_logo_color_oneline.png" style="height:150px;">
-<br/>
-                    <h2>Order ID: <?php echo $order_details['order_data']->order_no; ?></h2>
+                    <img src="<?php echo base_url(); ?>assets/paymeassets/payme_logo_color_oneline.png" style="height:150px;">
+                    <br/>
+                    <h4>Order ID: <?php echo $order_details['order_data']->order_no; ?></h4>
                     <h4>Price: <b>{{<?php echo $order_amount; ?> |currency:"HKD"}}</b></h4>
 
                     <table class="table">
@@ -47,12 +47,7 @@ $this->load->view('layout/header');
                         ?>
                         <div class="col-md-12 mt-5">
 
-                            <b>Paying with PayMe	</b>
-                            <ul>
-                                <li>1. Open the PayMe app.	</li>
-                                <li>2. Scan the PayCode to authorise payment.	</li>
-                                <li>3. Complete payment in the app and wait for confirmation.	</li>
-                            </ul>
+                            You have selected PayMe as your payment method and will be redirected to the PayMe app to complete payment.
                         </div>
                         <?php
                     }
@@ -70,16 +65,14 @@ $this->load->view('layout/header');
 
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 text-center">
                 <?php
                 if (isset($paymentdata2["webLink"])) {
                     ?>
-                    <div class="col-md-12 mt-5 text-center">
-                        <h4>Scan this PayCode with PayMe	</h4>
-                        <div id="qr"></div>
-                        <canvas id="payCodeCanvas" width="344" height="344"></canvas>
-                        <p>Please do not close this page before payment is complete</p>
-                    </div>
+                    <br/>
+                    <a href="<?php echo $paymentdata2["webLink"]; ?>">    
+                        <img src="<?php echo base_url(); ?>assets/paymeassets/PayMeButton Round.png" style="">
+                    </a>
                     <?php
                 } else {
                     ?>
