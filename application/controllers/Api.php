@@ -71,7 +71,14 @@ class Api extends REST_Controller {
             }
         }
 
+
+  
+
+        $session_cart['shipping_price'] = 0.81;
+        
         $session_cart['sub_total_price'] = $session_cart['total_price'];
+
+
 
         $session_cart['total_price'] = $session_cart['total_price'] + $session_cart['shipping_price'];
 
@@ -391,12 +398,12 @@ class Api extends REST_Controller {
         $this->response("hell");
     }
 
-    function paymewebhook($orderkey) {
+    function paymewebhook_post($orderkey) {
         $postdata = $this->post();
         $notifydata = array(
             "order_id" => $orderkey,
             "payment_data" => json_encode($postdata),
-            "datetime" => date('Y-m-d H:i:s')
+            "datetime" => date('Y-m-d H:i:s') . " API"
         );
         $this->db->insert('payme_status', $notifydata);
     }

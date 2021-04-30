@@ -36,34 +36,54 @@ $this->load->view('layout/header');
 
                     <img id="logo" style="display: none" width="30" height="30" src="<?php echo base_url(); ?>assets/paymeassets/Icon-192.png" onload="update_qrcode()">
                     <hr/>
-                    <div class="col-md-12 mt-5">
-                        <b>Paying with PayMe	</b>
-                        <ul>
-                            <li>1. Open the PayMe app.	</li>
-                            <li>2. Scan the PayCode to authorise payment.	</li>
-                            <li>3. Complete payment in the app and wait for confirmation.	</li>
-                        </ul>
-                    </div>
-                    <table class="table table-borderd" style="display: block">
-                        <?php
-                        foreach ($paymentdata2 as $key => $value) {
-                            echo "<tr>";
-                            echo "<td>$key</td>";
-                            echo "<td class='responsedatatd' >" . print_r($value, true) . "</td>";
-                            echo "</tr>";
-                        }
+                    <?php
+                    if (isset($paymentdata2["webLink"])) {
                         ?>
-                    </table>
+                        <div class="col-md-12 mt-5">
+                            <b>Paying with PayMe	</b>
+                            <ul>
+                                <li>1. Open the PayMe app.	</li>
+                                <li>2. Scan the PayCode to authorise payment.	</li>
+                                <li>3. Complete payment in the app and wait for confirmation.	</li>
+                            </ul>
+                        </div>
+                        <?php
+                    }
+                    ?>
+<!--                    <table class="table table-borderd" style="display: block">
+                    <?php
+                    foreach ($paymentdata2 as $key => $value) {
+                        echo "<tr>";
+                        echo "<td>$key</td>";
+                        echo "<td class='responsedatatd' >" . print_r($value, true) . "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+            </table>-->
 
                 </div>
             </div>
             <div class="col-md-5">
-                <div class="col-md-12 mt-5 text-center">
-                    <h4>Scan this PayCode with PayMe	</h4>
-                    <div id="qr"></div>
-                    <canvas id="payCodeCanvas" width="344" height="344"></canvas>
-                    <p>Please do not close this page before payment is complete</p>
-                </div>
+                <?php
+                if (isset($paymentdata2["webLink"])) {
+                    ?>
+                    <div class="col-md-12 mt-5 text-center">
+                        <h4>Scan this PayCode with PayMe	</h4>
+                        <div id="qr"></div>
+                        <canvas id="payCodeCanvas" width="344" height="344"></canvas>
+                        <p>Please do not close this page before payment is complete</p>
+                    </div>
+                    <?php
+                } else {
+                    ?>
+
+                    <h3 style="font-size: 20px;margin-bottom: 20px;margin-top: 50px">
+                        Sorry, we were unable to process your payment. Please contact the store to manually confirm the status of your order.
+                    </h3>
+                    <?php
+                }
+                ?>
+
 
             </div>
             <div class="col-md-1"></div>
@@ -129,7 +149,7 @@ $this->load->view('layout/header');
                             var m = 'Byte';
                             var mb = 'UTF-8';
                             var qr = create_qrcode(text, "0", "Q", m, mb);
-                            var size = "500";
+                            var size = "350";
                             var canvas = document.getElementById('payCodeCanvas');
                             var ctx = canvas.getContext('2d');
                             var imgobj = document.createElement("IMG");

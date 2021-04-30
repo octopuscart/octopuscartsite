@@ -29,6 +29,7 @@ class PaymePayment extends CI_Controller {
         $this->api_version = "0.12";
         $this->payment_request_url = "/payments/paymentrequests";
         $this->auth_request_url = "/oauth2/token";
+        $this->testamount = 7.45;
         $this->paymentlist = array(
             "1.80" => array("amt" => "1.80", "status" => "Normal expiry", "title" => "Package 1",),
             "1.81" => array("amt" => "1.81", "status" => "Payment success", "title" => "Package 2"),
@@ -228,7 +229,7 @@ class PaymePayment extends CI_Controller {
 //        $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = (1) + 0.81;
+        $total_price =  $this->testamount;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
@@ -250,6 +251,7 @@ class PaymePayment extends CI_Controller {
         $headers = $this->createHeader($body, $post, $url);
         $url = $this->protocol . $this->endpoint . $url;
         $curldata = $this->useCurl($url, $headers, $body);
+  
         $paymentRequestId = isset($curldata["paymentRequestId"]) ? $curldata["paymentRequestId"] : "";
         $this->session->set_userdata('paymentRequestId', $paymentRequestId);
         $data["paymentdata"] = $curldata;
@@ -267,6 +269,12 @@ class PaymePayment extends CI_Controller {
         $url = $this->protocol . $this->endpoint . $url;
         $curldata = $this->useCurl($url, $headers, $body, $post);
         return ($curldata);
+    }
+
+    function checkstatus() {
+       echo $paymentRequestId = $this->session->userdata('paymentRequestId');
+        $curldata = $this->query($paymentRequestId);
+        print_r($curldata);
     }
 
     public function cancel($payid) {
@@ -289,22 +297,55 @@ class PaymePayment extends CI_Controller {
         $this->load->view('payme/paycancel', $data);
     }
 
-    function success() {
+    function success($order_key) {
+        $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
+        $total_price = (1) + $this->testamount;
+        $orderno = $order_details['order_data']->order_no;
+        $data["order_amount"] = $total_price;
+        $data["cart_data"] = $order_details['cart_data'];
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["paymentlist"] = $this->paymentlist;
         $data["paymentRequestId"] = $paymentRequestId;
+        $data["order_details"] = $order_details;
         $this->load->view('payme/success', $data);
     }
 
-    function failure() {
+    function failure($order_key) {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["paymentlist"] = $this->paymentlist;
         $data["paymentRequestId"] = $paymentRequestId;
+        $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
+        $total_price = (1) + $this->testamount;
+        $orderno = $order_details['order_data']->order_no;
+        $data["order_amount"] = $total_price;
+        $data["cart_data"] = $order_details['cart_data'];
+        $data["paymentdata"] = $curldata;
+        $data["paymentlist"] = $this->paymentlist;
+        $data["paymentRequestId"] = $paymentRequestId;
+        $data["order_details"] = $order_details;
         $this->load->view('payme/failed', $data);
+    }
+    
+    function expiry($order_key) {
+        $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
+        $curldata = $this->query($paymentRequestId);
+        $data["paymentdata"] = $curldata;
+        $data["paymentlist"] = $this->paymentlist;
+        $data["paymentRequestId"] = $paymentRequestId;
+        $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
+        $total_price = (1) + $this->testamount;
+        $orderno = $order_details['order_data']->order_no;
+        $data["order_amount"] = $total_price;
+        $data["cart_data"] = $order_details['cart_data'];
+        $data["paymentdata"] = $curldata;
+        $data["paymentlist"] = $this->paymentlist;
+        $data["paymentRequestId"] = $paymentRequestId;
+        $data["order_details"] = $order_details;
+        $this->load->view('payme/expiry', $data);
     }
 
     function notificaton($orderkey) {
