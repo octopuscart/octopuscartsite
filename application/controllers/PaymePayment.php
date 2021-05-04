@@ -12,10 +12,17 @@ class PaymePayment extends CI_Controller {
         $this->checklogin = $this->session->userdata('logged_in');
         $this->user_id = $this->session->userdata('logged_in')['login_id'];
 
-        $cid = "a989d65f-52eb-4fca-abeb-971c883d50ea";
-        $csecret = "7L8_VpY21_JE6fR4Bs_lw0tVl.~kNdC-m1";
-        $skeyid = "bcea0f7f-3840-4466-a018-7e846d22673b";
-        $skey = "ZjVta0NNSkU4cGFoSFVpWm5KYU9iaWk4YjZSNzdlanQ0dVJpOEo5T01OND0=";
+//        $cid = "a989d65f-52eb-4fca-abeb-971c883d50ea";
+//        $csecret = "7L8_VpY21_JE6fR4Bs_lw0tVl.~kNdC-m1";
+//        $skeyid = "bcea0f7f-3840-4466-a018-7e846d22673b";
+//        $skey = "ZjVta0NNSkU4cGFoSFVpWm5KYU9iaWk4YjZSNzdlanQ0dVJpOEo5T01OND0=";
+
+
+        $cid = "21b2e505-f65a-4cec-858e-86fdf7cb5393";
+        $csecret = "yb~.5~7~n81zha13.Vh~MIZJ_S-0YQL96H";
+        $skeyid = "07a4e805-e165-4fd1-9a7a-4a26fb496354";
+        $skey = "RjNPUFV3OTVneXdCclA5K3VSTHJDTUtxbnVGRWNxeEJZQUprdEhwZnM4MD0=";
+        
         $this->skey = $skey;
         $this->skeyid = $skeyid;
         $this->signing_key_base64 = $skey;
