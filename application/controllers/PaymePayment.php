@@ -16,19 +16,19 @@ class PaymePayment extends CI_Controller {
 //        $csecret = "7L8_VpY21_JE6fR4Bs_lw0tVl.~kNdC-m1";
 //        $skeyid = "bcea0f7f-3840-4466-a018-7e846d22673b";
 //        $skey = "ZjVta0NNSkU4cGFoSFVpWm5KYU9iaWk4YjZSNzdlanQ0dVJpOEo5T01OND0=";
-
-
+//        $testmode = "sandbox.";
+        $testmode = "";
         $cid = "21b2e505-f65a-4cec-858e-86fdf7cb5393";
         $csecret = "yb~.5~7~n81zha13.Vh~MIZJ_S-0YQL96H";
         $skeyid = "07a4e805-e165-4fd1-9a7a-4a26fb496354";
         $skey = "RjNPUFV3OTVneXdCclA5K3VSTHJDTUtxbnVGRWNxeEJZQUprdEhwZnM4MD0=";
-        
+
         $this->skey = $skey;
         $this->skeyid = $skeyid;
         $this->signing_key_base64 = $skey;
         $this->signing_key = base64_decode($this->signing_key_base64, true);
         $this->accept = "application/json";
-        $this->endpoint = "sandbox.api.payme.hsbc.com.hk";
+        $this->endpoint = $testmode . "api.payme.hsbc.com.hk";
         $this->protocol = "https://";
         $this->content_type = "application/json";
         $this->client_id = $cid;
@@ -36,7 +36,7 @@ class PaymePayment extends CI_Controller {
         $this->api_version = "0.12";
         $this->payment_request_url = "/payments/paymentrequests";
         $this->auth_request_url = "/oauth2/token";
-         $this->accesstokenbody = "client_id=$cid&client_secret=$csecret";
+        $this->accesstokenbody = "client_id=$cid&client_secret=$csecret";
         $this->testamount = 8.81;
         $this->paymentlist = array(
             "1.80" => array("amt" => "1.80", "status" => "Normal expiry", "title" => "Package 1",),
