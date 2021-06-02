@@ -37,7 +37,7 @@ class PaymePayment extends CI_Controller {
         $this->payment_request_url = "/payments/paymentrequests";
         $this->auth_request_url = "/oauth2/token";
         $this->accesstokenbody = "client_id=$cid&client_secret=$csecret";
-        $this->testamount = 1.81;
+        $this->testamount = 1.80;
         $this->paymentlist = array(
             "1.80" => array("amt" => "1.80", "status" => "Normal expiry", "title" => "Package 1",),
             "1.81" => array("amt" => "1.81", "status" => "Payment success", "title" => "Package 2"),
@@ -283,9 +283,19 @@ class PaymePayment extends CI_Controller {
     }
 
     function checkstatus() {
-        echo $paymentRequestId = $this->session->userdata('paymentRequestId');
+        $paymentRequestId = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         print_r($curldata);
+//        $paymentarray = array(
+//            
+//        );
+//        
+//           $notifydata = array(
+//            "order_id" => $orderkey,
+//            "payment_data" => json_encode($postdata),
+//            "datetime" => date('Y-m-d H:i:s')
+//        );
+//        $this->db->insert('payme_status', $notifydata);
     }
 
     public function cancel($payid) {
