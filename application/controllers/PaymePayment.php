@@ -250,7 +250,7 @@ class PaymePayment extends CI_Controller {
             "notificationUri" => $notificatonurl,
             "appSuccessCallback" => $successurl,
             "appFailCallback" => $failureurl,
-            "effectiveDuration" => 60,
+            "effectiveDuration" => 300,
             "merchantData" => array(
                 "orderId" => $orderno,
             ),
