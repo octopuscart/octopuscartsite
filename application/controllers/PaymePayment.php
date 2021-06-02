@@ -233,8 +233,8 @@ class PaymePayment extends CI_Controller {
     public function payMeprocess($order_key, $is_mobile = "") {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
-        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
-//        $notificatonurl = site_url("Api/paymewebhook/$order_key");
+//        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
+        $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
         $total_price = $this->testamount;
@@ -291,7 +291,7 @@ class PaymePayment extends CI_Controller {
     public function cancel($payid) {
         $successurl = site_url("PaymePayment/success");
         $failureurl = site_url("PaymePayment/failure");
-        $notificatonurl = site_url("PaymePayment/notificaton");
+        $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = false;
         $url = $this->payment_request_url . '/' . $payid . "/cancel";
 
