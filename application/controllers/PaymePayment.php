@@ -325,7 +325,7 @@ class PaymePayment extends CI_Controller {
 
     function success($order_key) {
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = (1) + $this->testamount;
+        $total_price = $this->testamount;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
@@ -345,7 +345,7 @@ class PaymePayment extends CI_Controller {
         
         $data["paymentRequestId"] = $paymentRequestId;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = (1) + $this->testamount;
+        $total_price = $this->testamount;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
