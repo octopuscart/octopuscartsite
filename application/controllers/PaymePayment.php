@@ -231,8 +231,8 @@ class PaymePayment extends CI_Controller {
     }
 
     public function payMeprocess($order_key, $is_mobile = "") {
-        $successurl = site_url("PaymePayment/success");
-        $failureurl = site_url("PaymePayment/failure");
+        $successurl = site_url("PaymePayment/success/$order_key");
+        $failureurl = site_url("PaymePayment/failure/$order_key");
 //        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
         $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
@@ -327,7 +327,7 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
-        $data["paymentlist"] = $this->paymentlist;
+
         $data["paymentRequestId"] = $paymentRequestId;
         $data["order_details"] = $order_details;
         $this->load->view('payme/success', $data);
@@ -337,7 +337,7 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
-        $data["paymentlist"] = $this->paymentlist;
+        
         $data["paymentRequestId"] = $paymentRequestId;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
         $total_price = (1) + $this->testamount;
