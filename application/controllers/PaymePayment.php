@@ -37,7 +37,7 @@ class PaymePayment extends CI_Controller {
         $this->payment_request_url = "/payments/paymentrequests";
         $this->auth_request_url = "/oauth2/token";
         $this->accesstokenbody = "client_id=$cid&client_secret=$csecret";
-        $this->testamount = 1.77;
+        $this->testamount = 1.81;
         $this->paymentlist = array(
             "1.80" => array("amt" => "1.80", "status" => "Normal expiry", "title" => "Package 1",),
             "1.81" => array("amt" => "1.81", "status" => "Payment success", "title" => "Package 2"),
