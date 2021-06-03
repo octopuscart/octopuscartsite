@@ -130,7 +130,7 @@ class PaymePayment extends CI_Controller {
         $this->load->view('payme/login', $data);
     }
 
-    function initPaymeLogin($orderkey) {
+    function initPaymeLogin($orderkey, $ismobile = 0) {
         $headers[] = "Content-Type: application/x-www-form-urlencoded";
         $headers[] = "Accept: application/json";
         $headers[] = "Authorization:noauth";
@@ -141,7 +141,12 @@ class PaymePayment extends CI_Controller {
         $token_type = $curldata['tokenType'];
         $this->session->set_userdata('access_token', $access_token);
         $this->session->set_userdata('token_type', $token_type);
+        if($ismobile){
+            redirect("PaymePayment/payMeprocess/$orderkey/mobile");
+        }
+        else{
         redirect("PaymePayment/payMeprocess/$orderkey");
+        }
     }
 
     private function createdigest($body) {
