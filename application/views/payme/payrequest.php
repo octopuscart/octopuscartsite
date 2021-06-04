@@ -40,7 +40,7 @@ $this->load->view('layout/header');
                         </tr>
                     </table>
 
-                    <img id="logo" style="display: none" width="30" height="30" src="<?php echo base_url(); ?>assets/paymeassets/Icon-192.png" onload="update_qrcode()">
+                    <img id="logo" style="display: none" width="30" height="30" src="<?php echo base_url(); ?>assets/paymeassets/Icon-1921.png" onload="update_qrcode()">
                     <hr/>
                     <?php
                     if (isset($paymentdata2["webLink"])) {
