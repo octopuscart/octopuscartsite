@@ -306,7 +306,7 @@ class PaymePayment extends CI_Controller {
 
     function checkstatusApi() {
         $paymentRequestId = $this->session->userdata('paymentRequestId');
-        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
+//        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
         $curldata = $this->query($paymentRequestId);
         echo json_encode($curldata);
     }
