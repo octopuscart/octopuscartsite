@@ -293,7 +293,7 @@ class Cart extends CI_Controller {
                     'order_id' => $last_id,
                     'status' => $genstatus,
                     'user_id' => $this->user_id,
-                    'remark' => "$genstatus By Using " . $paymentmathod . ",  Waiting For Payment",
+                    'remark' => "$genstatus " . ",  Waiting For Payment",
                 );
                 $this->db->insert('user_order_status', $order_status_data);
 //                    $this->Product_model->order_to_vendor($last_id);

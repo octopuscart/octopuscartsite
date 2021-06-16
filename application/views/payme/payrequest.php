@@ -75,14 +75,29 @@ $this->load->view('layout/header');
                 if (isset($paymentdata2["webLink"])) {
                     ?>
                     <div class="col-md-12 mt-5 text-center">
-                        <h4>Scan this PayCode with PayMe	</h4>
-                        <div id="qr"></div>
-                        <canvas id="payCodeCanvas" width="344" height="344"></canvas>
+                        <?php
+                        if ($is_mobile) {
+                            ?>
+                            <a href="<?php echo $paymentdata2["webLink"]; ?>">    
+                                <img src="<?php echo base_url(); ?>assets/paymeassets/PayMeButton Round.png" style="">
+                            </a>
+
+                            <?php
+                        } else {
+                            ?>
+                            <h4>Scan this PayCode with PayMe	</h4>
+
+                            <div id="qr"></div>
+                            <canvas id="payCodeCanvas" width="344" height="344"></canvas>
+
+                            <?php
+                        }
+                        ?>
                         <p>Please do not close this page before payment is complete</p>
                         <div class="leadingdata">
                             <img  width="30" height="30" src="<?php echo base_url(); ?>assets/paymeassets/loading.gif" >
-                           &nbsp; {{paymentdata.data.statusDescription}}
-                           
+                            &nbsp; {{paymentdata.data.statusDescription}}
+
                         </div>
                     </div>
                     <?php
@@ -108,7 +123,8 @@ $this->load->view('layout/header');
 
 <script>
     var weblink = "<?php echo isset($paymentdata2["webLink"]) ? $paymentdata2["webLink"] : ""; ?>";
-    var order_key = "<?php echo $order_key;?>"
+    var order_key = "<?php echo $order_key; ?>";
+    var checkmobile = "<?php echo $is_mobile;?>";
 
 </script>
 <!-- ========== END MAIN CONTENT ========== -->

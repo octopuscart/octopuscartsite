@@ -43,6 +43,15 @@ $this->load->view('layout/header');
     </div>
 </main>
 <!-- ========== END MAIN CONTENT ========== -->
+
 <?php
 $this->load->view('layout/footer');
 ?>
+
+<script>
+   $(function(){
+       setTimeout(function(){
+           window.location = "<?php echo site_url("Order/orderdetails/".$order_details['order_data']->order_key);?>";
+       },5000)
+   })
+</script>

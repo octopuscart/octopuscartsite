@@ -8,6 +8,7 @@ class PaymePayment extends CI_Controller {
         parent::__construct();
         $this->load->model('Product_model');
         $this->load->library('session');
+        $this->load->library('user_agent');
         $this->load->model('User_model');
         $this->checklogin = $this->session->userdata('logged_in');
         $this->user_id = $this->session->userdata('logged_in')['login_id'];
@@ -131,6 +132,9 @@ class PaymePayment extends CI_Controller {
     }
 
     function initPaymeLogin($orderkey, $ismobile = 0) {
+        if ($this->agent->is_mobile()) {
+            $ismobile = $this->agent->mobile();
+        }
         $headers[] = "Content-Type: application/x-www-form-urlencoded";
         $headers[] = "Accept: application/json";
         $headers[] = "Authorization:noauth";
@@ -269,12 +273,14 @@ class PaymePayment extends CI_Controller {
         $this->session->set_userdata('paymentRequestId', $paymentRequestId);
         $data["paymentdata"] = $curldata;
         $data["order_details"] = $order_details;
-
-        if ($is_mobile) {
-            $this->load->view('payme/payrequest_mobile', $data);
-        } else {
-            $this->load->view('payme/payrequest', $data);
+        $data["is_mobile"] = false;
+        if ($this->agent->is_mobile()) {
+            $is_mobile = $this->agent->mobile();
+            $data["is_mobile"] = true;
         }
+
+
+        $this->load->view('payme/payrequest', $data);
     }
 
     public function query($payid) {
@@ -289,7 +295,7 @@ class PaymePayment extends CI_Controller {
 
     function checkstatus() {
         $paymentRequestId = $this->session->userdata('paymentRequestId');
-        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
+//        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
         $curldata = $this->query($paymentRequestId);
         print_r($curldata);
 //        $paymentarray = array(
@@ -306,16 +312,18 @@ class PaymePayment extends CI_Controller {
 
     function checkstatusApi() {
         $paymentRequestId = $this->session->userdata('paymentRequestId');
-//        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
+        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
         $curldata = $this->query($paymentRequestId);
         echo json_encode($curldata);
     }
 
-    public function cancel($payid) {
-        $successurl = site_url("PaymePayment/success");
-        $failureurl = site_url("PaymePayment/failure");
+    public function cancel($order_key) {
+        $successurl = site_url("PaymePayment/success/$order_key");
+        $failureurl = site_url("PaymePayment/failure/$order_key");
+//        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
         $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = false;
+        $payid = $this->session->userdata('paymentRequestId');
         $url = $this->payment_request_url . '/' . $payid . "/cancel";
 
         $body = null;
@@ -341,6 +349,16 @@ class PaymePayment extends CI_Controller {
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
 
+        $order_status_data = array(
+            'c_date' => date('Y-m-d'),
+            'c_time' => date('H:i:s'),
+            'order_id' => $order_details['order_data']->id,
+            'status' => "PayMe Status: $paymentRequestId",
+            'user_id' => $this->user_id,
+            'remark' => "Payment Success Using PayMe",
+        );
+        $this->db->insert('user_order_status', $order_status_data);
+
         $data["paymentRequestId"] = $paymentRequestId;
         $data["order_details"] = $order_details;
         $this->load->view('payme/success', $data);
@@ -350,6 +368,22 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
+
+
+        $successurl = site_url("PaymePayment/success/$order_key");
+        $failureurl = site_url("PaymePayment/failure/$order_key");
+//        $notificatonurl = site_url("PaymePayment/notificaton/$order_key");
+        $notificatonurl = site_url("Api/paymewebhook/$order_key");
+        $post = false;
+        $payid = $this->session->userdata('paymentRequestId');
+        $url = $this->payment_request_url . '/' . $payid . "/cancel";
+
+        $body = null;
+        $method = "put";
+        $headers = $this->createHeader($body, $post, $url, $method);
+
+        $url = $this->protocol . $this->endpoint . $url;
+        $curldata = $this->useCurlPut($url, $headers, $body, $post);
 
         $data["paymentRequestId"] = $paymentRequestId;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');

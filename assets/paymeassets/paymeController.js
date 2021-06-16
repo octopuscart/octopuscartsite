@@ -73,7 +73,9 @@ App.controller('PaymeController', function ($scope, $http, $timeout, $interval) 
 
     $scope.paymentdata = {"status": "0", "data": {}};
     if (weblink) {
-        update_qrcode();
+        if (checkmobile != '1') {
+            update_qrcode();
+        }
     }
 
     $scope.redirectToPage = function (weblink) {
@@ -84,16 +86,16 @@ App.controller('PaymeController', function ($scope, $http, $timeout, $interval) 
         console.log(n, o);
         switch (n) {
             case "PR001":
-                
+
                 break;
             case "PR007":
-                $scope.redirectToPage("PaymePayment/failure/"+order_key);
+                $scope.redirectToPage("PaymePayment/failure/" + order_key);
                 break;
             case "PR004":
-                $scope.redirectToPage("PaymePayment/cancel/"+order_key);
+                $scope.redirectToPage("PaymePayment/failure/" + order_key);
                 break;
             case "PR005":
-                $scope.redirectToPage("PaymePayment/success/"+order_key);
+                $scope.redirectToPage("PaymePayment/success/" + order_key);
                 break;
 
         }
