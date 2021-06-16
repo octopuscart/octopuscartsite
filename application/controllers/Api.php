@@ -74,7 +74,7 @@ class Api extends REST_Controller {
 
   
 
-        $session_cart['shipping_price'] = 0.81;
+        $session_cart['shipping_price'] = 0;
         
         $session_cart['sub_total_price'] = $session_cart['total_price'];
 

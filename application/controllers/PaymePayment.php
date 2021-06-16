@@ -141,11 +141,10 @@ class PaymePayment extends CI_Controller {
         $token_type = $curldata['tokenType'];
         $this->session->set_userdata('access_token', $access_token);
         $this->session->set_userdata('token_type', $token_type);
-        if($ismobile){
+        if ($ismobile) {
             redirect("PaymePayment/payMeprocess/$orderkey/mobile");
-        }
-        else{
-        redirect("PaymePayment/payMeprocess/$orderkey");
+        } else {
+            redirect("PaymePayment/payMeprocess/$orderkey");
         }
     }
 
@@ -242,10 +241,11 @@ class PaymePayment extends CI_Controller {
         $notificatonurl = site_url("Api/paymewebhook/$order_key");
         $post = true;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = $this->testamount;
+        $total_price = $order_details['order_data']->total_price;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
+        $data["order_key"] = $order_key;
 
 
         $url = $this->payment_request_url;
@@ -289,6 +289,7 @@ class PaymePayment extends CI_Controller {
 
     function checkstatus() {
         $paymentRequestId = $this->session->userdata('paymentRequestId');
+        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
         $curldata = $this->query($paymentRequestId);
         print_r($curldata);
 //        $paymentarray = array(
@@ -301,6 +302,13 @@ class PaymePayment extends CI_Controller {
 //            "datetime" => date('Y-m-d H:i:s')
 //        );
 //        $this->db->insert('payme_status', $notifydata);
+    }
+
+    function checkstatusApi() {
+        $paymentRequestId = $this->session->userdata('paymentRequestId');
+        $paymentRequestId = "e82ebebc-3471-4c38-b8a7-536b93346cf9";
+        $curldata = $this->query($paymentRequestId);
+        echo json_encode($curldata);
     }
 
     public function cancel($payid) {
@@ -325,7 +333,7 @@ class PaymePayment extends CI_Controller {
 
     function success($order_key) {
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = $this->testamount;
+        $total_price = $order_details['order_data']->total_price;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
@@ -342,10 +350,10 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
-        
+
         $data["paymentRequestId"] = $paymentRequestId;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = $this->testamount;
+        $total_price = $order_details['order_data']->total_price;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
@@ -363,7 +371,7 @@ class PaymePayment extends CI_Controller {
         $data["paymentlist"] = $this->paymentlist;
         $data["paymentRequestId"] = $paymentRequestId;
         $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
-        $total_price = (1) + $this->testamount;
+        $total_price = $order_details['order_data']->total_price;
         $orderno = $order_details['order_data']->order_no;
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];

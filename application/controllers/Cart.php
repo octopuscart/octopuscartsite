@@ -218,7 +218,7 @@ class Cart extends CI_Controller {
 
 
 
-                $session_cart['shipping_price'] = 40;
+                $session_cart['shipping_price'] = 0;
                 if ($session_cart['total_price'] > 399) {
                     $session_cart['shipping_price'] = 0;
                 }
