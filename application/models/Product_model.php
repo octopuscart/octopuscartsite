@@ -575,7 +575,7 @@ where pa.product_id in ($productatrvalue) group by attribute_value_id";
             );
             $this->db->insert('user_order_log', $orderlog);
 
-            $subject = "Order Placed - Your Order with www.woodlandshk.com [" . $order_no . "] has been successfully placed!";
+            $subject = "Order Placed - Your Order with www.octopuscart.com [" . $order_no . "] has been successfully placed!";
             $this->email->subject($subject);
 
             if ($checkcode) {

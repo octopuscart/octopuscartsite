@@ -93,10 +93,7 @@
                                      height: 100px;color:white;
                                      width: auto;"/><br/>
                             <h3 style="color:white;">Thank you for your order</h3>
-                            <h4 style="    background: red;
-                                padding: 8px;
-                                color: white;
-                                border-radius: 20px;">Restaurant will call you to confirm the order</h4>
+                        
 
                             <h4 style="color:white;"> Order No.: <?php echo $order_data->order_no; ?></h4>
                         </center>
@@ -140,31 +137,7 @@
                             </tr>
                         </table>
 
-                        <div style="border: 2px solid red;">
-                            <?php if ($order_data->zipcode == 'Pickup') { ?>
-                                <table class="gn_table">
-
-                                    <tr>
-                                        <th>Expected Ready Time</th>
-                                        <td>: <?php echo date("h:i a", strtotime("+45 minute")); ?> </td>
-                                    </tr>
-                                </table>
-                                <?php } else {
-                                ?>
-                                <table class="gn_table">
-                                    <tr>
-                                        <th>Delivery Area</th>
-                                        <td>: <?php echo $order_data->zipcode; ?> </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Expected Delivery Date/Time</th>
-                                        <td>: <?php echo date("h:i a", strtotime("+45 minute")); ?> </td>
-                                    </tr>
-                                </table>
-                                <?php
-                            }
-                            ?>
-                        </div>
+                       
 
 
 
@@ -287,48 +260,8 @@
 
 
 
-                        <?php // echo EMAIL_FOOTER; ?>
-                        <table style="width:100%;">
-                            <tbody>
-                                <tr>
-                                    <td colspan="2">
-                                        <p style="text-align: center;">Thank you for choosing Woodlands. Your food will be on its way.</p>
-
-                                        <p>For any queries, Please contact us on Whastsapp <a href="https://api.whatsapp.com/send?phone=85256818131&amp;text=&amp;source=&amp;data=&amp;app_absent=" style="color:black;" target="_blank">+(852) 5681 8131</a> or email at <a href="mailto:order@woodlandshk.com" style="color:black;" target="_blank">order@woodlandshk.com</a></p>
-
-                                        <p>Enjoy the food from</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="width: 60%">
-                                        <div style="height: 200px;">Your Favorite Vegetarian Restaurants<br />
-                                            <img src="https://www.woodlandshk.com/assets/images/logo.png" style="    height: 90px; margin: 5px 0px 10px;" />
-                                            <address><span style="float: left; font-size: 12px;"><b>Address </b><br />
-                                                    UG Shop 16 &amp; 17, Wing On Plaza,<br />
-                                                    62, Mody Road, Tsim Sha Tsui East,<br />
-                                                    Kowloon, Hong Kong<br />
-                                                    <b>Tel#</b>:&nbsp;+(852) 2369 3718, +(852) 2366 1945<br />
-                                                    <b>Email</b>: order@woodlandshk.com, info@woodlandshk.com<br />
-                                                    <b>Web</b>: www.woodlandshk.com</span></address>
-                                            <span style="float: left; font-size: 12px;"> </span></div>
-                                    </td>
-                                    <td style="    width: 40%;    text-align: center;">
-                                        <p>
-                                            <a href="https://www.facebook.com/woodlandshk" target="_blank" class="socialicons">
-                                                <img src="https://www.woodlandshk.com/assets/icon/facebook.png"/>
-                                            </a>
-                                            <a href="https://www.instagram.com/woodlands.hk/" target="_blank" class="socialicons">
-                                                <img src="https://www.woodlandshk.com/assets/icon/instagram.png"/>
-                                            </a>
-
-                                        </p>
-                                        <p>&nbsp;</p>
-
-                                        <p><a href="https://www.woodlandshk.com/loyalty-program" target="_blank">Join our loyalty program.</a> <br/>(For exclusive offers and benefits)</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <?php echo EMAIL_FOOTER; ?>
+              
 
                         <br/>
                         <span style="    text-align: center;
@@ -343,7 +276,6 @@
                 <tr>
                     <td colspan="6" style="padding: 0px;">
 
-       <!--<img src="<?php echo base_url(); ?>assets/emails/emailfooter.JPG" style="width:100%;"></img>-->
 
 
                     </td>
