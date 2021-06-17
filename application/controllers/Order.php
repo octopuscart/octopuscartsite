@@ -43,7 +43,15 @@ class Order extends CI_Controller {
     //orders details
     public function orderdetails($order_key) {
 
-      $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
+      
+        $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
+      
+        
+        $this->db->order_by('id', 'desc');
+        $this->db->where('order_id', $order_details['order_data']->id);
+        $query = $this->db->get('vendor_order');
+        $vendor_order = $query->result();
+
 
         $file_newname = "";
         $this->db->where('active', 'yes');
@@ -51,11 +59,9 @@ class Order extends CI_Controller {
         $paymentbarcode = $query->row();
         $order_details['paymentbarcode'] = $paymentbarcode;
 
-
+    
 
         $order_id = $order_details['order_data']->id;
-
-
         if ($order_details) {
 
             try {
@@ -67,7 +73,7 @@ class Order extends CI_Controller {
                 // redirect("Order/orderdetails/$order_key");
             }
         } else {
-            redirect("Order/orderdetailsguest/$order_key");
+            redirect('/');
         }
         $this->load->view('Order/orderdetails', $order_details);
     }
