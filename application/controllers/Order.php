@@ -43,7 +43,7 @@ class Order extends CI_Controller {
     //orders details
     public function orderdetails($order_key) {
 
-      order_details = $this->Product_model->getOrderDetails($order_key, 'key');
+      $order_details = $this->Product_model->getOrderDetails($order_key, 'key');
 
         $file_newname = "";
         $this->db->where('active', 'yes');
