@@ -86,16 +86,16 @@
           background: rgb(225, 225, 225);
           font-family: sans-serif;">
         <div class="" style="padding:50px 0px">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="700" style="background: #FBB316!important;padding: 0 20px">
+            <table align="center" border="0" cellpadding="0" cellspacing="0" width="700" style="background: #FFF!important;padding: 0 20px">
                 <tr>
                     <td >
                         <center><img src="<?php echo site_mail_logo; ?> " style="margin: 10px;
-                                     height: 100px;color:white;
+                                     height: 80px;color:white;
                                      width: auto;"/><br/>
-                            <h3 style="color:white;">Thank you for your order</h3>
+                            <h3 style="color:black;">Thank you for your order</h3>
                         
 
-                            <h4 style="color:white;"> Order No.: <?php echo $order_data->order_no; ?></h4>
+                            <h4 style="color:black;"> Order No.: <?php echo $order_data->order_no; ?></h4>
                         </center>
                     </td>
 
@@ -256,7 +256,7 @@
 
 
                 <tr>
-                    <td colspan="6" style="font-size: 12px;background: #8CC646;">
+                    <td colspan="6" style="font-size: 12px;background: lightgrey;">
 
 
 
