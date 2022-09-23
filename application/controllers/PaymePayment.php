@@ -19,10 +19,16 @@ class PaymePayment extends CI_Controller {
 //        $skey = "ZjVta0NNSkU4cGFoSFVpWm5KYU9iaWk4YjZSNzdlanQ0dVJpOEo5T01OND0=";
 //        $testmode = "sandbox.";
         $testmode = "";
+//        $cid = "21b2e505-f65a-4cec-858e-86fdf7cb5393";
+//        $csecret = "yb~.5~7~n81zha13.Vh~MIZJ_S-0YQL96H";
+//        $skeyid = "07a4e805-e165-4fd1-9a7a-4a26fb496354";
+//        $skey = "RjNPUFV3OTVneXdCclA5K3VSTHJDTUtxbnVGRWNxeEJZQUprdEhwZnM4MD0=";
+
         $cid = "21b2e505-f65a-4cec-858e-86fdf7cb5393";
-        $csecret = "yb~.5~7~n81zha13.Vh~MIZJ_S-0YQL96H";
-        $skeyid = "07a4e805-e165-4fd1-9a7a-4a26fb496354";
-        $skey = "RjNPUFV3OTVneXdCclA5K3VSTHJDTUtxbnVGRWNxeEJZQUprdEhwZnM4MD0=";
+        $csecret = "GqN7Q~-3kQs3K346PHNxT34h6rh5yUrqBAYyH";
+        $skeyid = "23b2e0cd-f058-4b77-a998-9924682a1b82";
+        $skey = "R3M0eExUQ0trcDVoS0ZzYjFzU0tGMFgxYWlpc1M5Z3JCankxcUtQMWFmaz0=";
+        
 
         $this->skey = $skey;
         $this->skeyid = $skeyid;
@@ -199,10 +205,8 @@ class PaymePayment extends CI_Controller {
         $signature .= "trace-id: $this->trace_id\n";
         $signature .= "authorization: $this->token_type $this->access_token";
 
-
         $signature_hash = base64_encode(
                 hash_hmac("sha256", $signature, $this->signing_key, true));
-
 
         return $signature_hash;
     }
@@ -216,7 +220,6 @@ class PaymePayment extends CI_Controller {
         $request_date_time = gmdate("Y-m-d\TH:i:s\Z");
 
         $this->session->set_userdata('request_date_time', $request_date_time);
-
 
         $this->request_date_time = $request_date_time;
         $this->createdigest($body);
@@ -250,7 +253,6 @@ class PaymePayment extends CI_Controller {
         $data["order_amount"] = $total_price;
         $data["cart_data"] = $order_details['cart_data'];
         $data["order_key"] = $order_key;
-
 
         $url = $this->payment_request_url;
         $orderdata = array(
@@ -333,8 +335,6 @@ class PaymePayment extends CI_Controller {
         $url = $this->protocol . $this->endpoint . $url;
         $curldata = $this->useCurlPut($url, $headers, $body, $post);
 
-
-
         $data["paymentdata"] = $curldata;
         $this->load->view('payme/paycancel', $data);
     }
@@ -368,7 +368,6 @@ class PaymePayment extends CI_Controller {
         $paymentRequestId = $this->token_type = $this->session->userdata('paymentRequestId');
         $curldata = $this->query($paymentRequestId);
         $data["paymentdata"] = $curldata;
-
 
         $successurl = site_url("PaymePayment/success/$order_key");
         $failureurl = site_url("PaymePayment/failure/$order_key");
